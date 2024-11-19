@@ -1,16 +1,24 @@
 package com.example.data.storage
 
-// TODO Здесь Entity или модели ?
+import com.example.domain.models.CurrentWeather.Clouds
+import com.example.domain.models.CurrentWeather.Coord
+import com.example.domain.models.CurrentWeather.Main
+import com.example.domain.models.CurrentWeather.Sys
+import com.example.domain.models.CurrentWeather.Weather
+import com.example.domain.models.CurrentWeather.WeatherList
+import com.example.domain.models.CurrentWeather.Wind
+
+
 data class WeatherListEntity(
-    val coord: CoordEntity,
-    val weather: List<WeatherEntity>,
+    val coord: Coord,
+    val weather: List<Weather>,
     val base: String,
-    val main: MainEntity,
+    val main: Main,
     val visibility: Long,
-    val wind: WindEntity,
-    val clouds: CloudsEntity,
+    val wind: Wind,
+    val clouds: Clouds,
     val dt: Long,
-    val sys: SysEntity,
+    val sys: Sys,
     val timezone: Long,
     val id: Long,
     val name: String,
@@ -19,7 +27,7 @@ data class WeatherListEntity(
     ) {
     companion object {}
 }
-/*fun WeatherListEntity.toModel(): WeatherList{
+fun WeatherListEntity.toModel(): WeatherList{
     return WeatherList(
         coord = coord,
         weather = weather,
@@ -36,11 +44,21 @@ data class WeatherListEntity(
         cod =  cod,
     )
 }
-fun TaskEntity.Companion.fromModel(taskModel: TaskModel): TaskEntity {
-    return TaskEntity(taskModel.id, taskModel.text, taskModel.title, taskModel.color)
-}*/
-/*
+fun WeatherListEntity.Companion.fromModel(weatherList: WeatherList): WeatherListEntity {
+    return WeatherListEntity(
+        weatherList.coord,
+        weatherList.weather,
+        weatherList.base,
+        weatherList.main,
+        weatherList.visibility,
+        weatherList.wind,
+        weatherList.clouds,
+        weatherList.dt,
+        weatherList.sys,
+        weatherList.timezone,
+        weatherList.id,
+        weatherList.name,
+        weatherList.cod
+    )
+}
 
-fun WeatherList.toModel() : WeatherList {
-    return WeatherList()
-}*/
