@@ -1,3 +1,4 @@
+/*
 package com.example.avito_mobile_dombrovskiy.TestRetrofit.Weather
 
 import retrofit2.Retrofit
@@ -13,4 +14,4 @@ object RetrofitHelper {
             // convert JSON object to Java object
             .build()
     }
-}
+}*/
