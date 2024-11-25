@@ -2,6 +2,14 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    //id("org.jetbrains.kotlin.jvm") version "1.9.0"
+    //id("com.google.devtools.ksp") version "1.9.0-1.0.12"
+    id("com.google.devtools.ksp") version "2.0.21-1.0.27"
+
+    //id("com.google.devtools.ksp")
+/*    id("kotlin-kapt")*/
+    //TODO
+   // id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -49,6 +57,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(project(":data"))
+    implementation(project(":domain"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -70,4 +80,34 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+
+
+     implementation("com.google.dagger:hilt-android:2.51.1")
+
+    implementation("androidx.room:room-ktx:2.5.0")
+    //ksp("androidx.room:room-compiler:2.5.0")
+    // Koin for Kotlin apps
+    val koin_version = "3.1.2"
+    implementation("io.insert-koin:koin-core:$koin_version") //+
+    implementation("io.insert-koin:koin-android:$koin_version") //+
+    //Koin Jetpack
+    implementation("io.insert-koin:koin-androidx-compose:$koin_version")
+
+
+
+    ksp("com.google.dagger:dagger-compiler:2.48") // Dagger compiler
+    ksp("com.google.dagger:hilt-compiler:2.48")   // Hilt compiler
+
+    //kapt("com.google.dagger:hilt-android-compiler:2.44")
+/*    dependencies {
+        implementation "com.google.dagger:hilt-android:2.51.1"
+        kapt "com.google.dagger:hilt-compiler:2.51.1"
+    }*/
+/*
+// Allow references to generated code
+    kapt {
+        correctErrorTypes true
+    }*/
 }
+
+

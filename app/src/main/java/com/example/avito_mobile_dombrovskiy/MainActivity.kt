@@ -33,31 +33,36 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivity.WeatherApp
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
+    private val vm: WeatherViewModel_ by viewModel<WeatherViewModel_>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContent {
             AppTheme {
+                vm.reduce(WeatherEvent.Loading)
                 WeatherApp()
-  /*              Scaffold(
-                    topBar = {
-                        TopAppBar(
-                            title = { Text("Weather App") }
-                        )
-                    },
-                    modifier = Modifier.fillMaxSize()
-                ) { innerPadding ->
+                /*              Scaffold(
+                                  topBar = {
+                                      TopAppBar(
+                                          title = { Text("Weather App") }
+                                      )
+                                  },
+                                  modifier = Modifier.fillMaxSize()
+                              ) { innerPadding ->
 
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                                  Greeting(
+                                      name = "Android",
+                                      modifier = Modifier.padding(innerPadding)
+                                  )
+                              }
 
 
-                RetrofitQuotesTest_()*/
+                              RetrofitQuotesTest_()*/
 
             }
         }
@@ -65,58 +70,6 @@ class MainActivity : ComponentActivity() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun WeatherApp(viewModel: WeatherViewModel = viewModel()) {
-    val weatherState by viewModel.weatherState.collectAsState()
-    var topBarCityName by remember { mutableStateOf("Саси")}
-        Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Погода в $topBarCityName") }
-            )
-        }
-    ) { innerPadding ->
-        when (weatherState) {
-            is WeatherState.Loading -> {
-                Box(
-                    modifier = Modifier.fillMaxSize()
-                        .padding(innerPadding),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
-            }
-            is WeatherState.Success -> {
-                val weatherResponse = (weatherState as WeatherState.Success).weatherResponse
-                topBarCityName = weatherResponse.name
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(text = "Temperature: ${weatherResponse.main.temp}°C")
-                    Text(text = "Humidity: ${weatherResponse.main.humidity}%")
-                    Text(text = "Description: ${weatherResponse.weather[0].description}")
-                }
-            }
-            is WeatherState.Error -> {
-                val errorMessage = (weatherState as WeatherState.Error).message
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(text = "Error: $errorMessage")
-                }
-            }
-        }
-    }
-
-    // Fetch weather data when the app starts
-    viewModel.fetchWeather("Omsk", "4dfc05c3309bcd397630c1c51dda583b")
-}
 /*fun RetrofitQuotesTest_(){
     val quotesApi = RetrofitHelper.getInstance().create(WeatherApi::class.java)
     // launching a new coroutine
@@ -137,6 +90,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         modifier = modifier
     )
 }
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {

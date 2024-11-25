@@ -1,5 +1,6 @@
 package com.example.avito_mobile_dombrovskiy
 
+
 data class WeatherResponse(
     val main: Main,
     val weather: List<Weather>,
