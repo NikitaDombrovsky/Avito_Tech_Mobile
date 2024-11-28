@@ -7,6 +7,8 @@ import com.example.avito_mobile_dombrovskiy.Core.UiEvent
 import com.example.avito_mobile_dombrovskiy.Core.UiState
 import com.example.data.storage.WeatherEntity
 import com.example.domain.usecase.CurrentUseCase.GetCurrentWeatherUseCase
+
+
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -66,6 +68,7 @@ class WeatherViewModel_(
     }
     // suspend
     fun fetchWeather(city: String, apiKey: String) {
+        getCurrentWeatherUseCase//().map { weather ->  }
         /*
                 getTasksUseCase().map {tasks -> TaskPreviewView(
             id = tasks.id,

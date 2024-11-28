@@ -1,6 +1,6 @@
 package com.example.domain.models.CurrentWeather
 
-data class WeatherList(
+class WeatherList(
     val coord: Coord,
     val weather: List<Weather>,
     val base: String,

@@ -5,6 +5,6 @@ import com.example.domain.repository.WeatherRepository
 
 class GetCurrentWeatherUseCase(private val weatherRepository: WeatherRepository) {
 
-    operator fun invoke(): List<WeatherList> =
+    suspend operator fun invoke(): List<WeatherList> =
         weatherRepository.getCurrentWeather()
 }

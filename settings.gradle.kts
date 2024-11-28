@@ -22,4 +22,5 @@ dependencyResolutionManagement {
 rootProject.name = "Avito_Mobile_Dombrovskiy"
 include(":app")
 include(":domain")
-include(":data")
+include(":data_")
+include(":datamodule")

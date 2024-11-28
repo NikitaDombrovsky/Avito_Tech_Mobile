@@ -11,7 +11,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/data" />
+            <option value="$PROJECT_DIR$/data_" />
+            <option value="$PROJECT_DIR$/datamodule" />
             <option value="$PROJECT_DIR$/domain" />
           </set>
         </option>
