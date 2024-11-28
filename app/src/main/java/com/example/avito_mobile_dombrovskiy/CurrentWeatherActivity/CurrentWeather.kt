@@ -20,15 +20,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.avito_mobile_dombrovskiy.TestViewModel
 import com.example.avito_mobile_dombrovskiy.WeatherState
 import com.example.avito_mobile_dombrovskiy.WeatherViewModel_
 
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WeatherApp(viewModel: WeatherViewModel_ = viewModel()) {
-    val weatherState by viewModel.state.collectAsState()
+fun WeatherApp(viewModel: TestViewModel = viewModel()) {
+   // val weatherState by viewModel.state.collectAsState()
     var topBarCityName by remember { mutableStateOf("Саси") }
+
+    /*
     Scaffold(
         topBar = {
             TopAppBar(
@@ -84,6 +88,9 @@ fun WeatherApp(viewModel: WeatherViewModel_ = viewModel()) {
 
     // Fetch weather data when the app starts
     viewModel.fetchWeather("Omsk", "4dfc05c3309bcd397630c1c51dda583b")
+
+    */
+
 }
 @Composable
 fun LoadingActivity(modifier: Modifier) {

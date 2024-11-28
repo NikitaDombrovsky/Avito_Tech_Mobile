@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import java.time.LocalDateTime
 
 /*
 class WeatherViewModel : ViewModel() {
@@ -33,7 +32,16 @@ class WeatherViewModel : ViewModel() {
 }
 */
 
+class TestViewModel(
 
+) : ViewModel(){
+
+}
+class TestWeatherViewModel(
+
+) : ViewModel(){
+
+}
 
 class WeatherViewModel_(
     private val getCurrentWeatherUseCase: GetCurrentWeatherUseCase
@@ -80,8 +88,9 @@ class WeatherViewModel_(
         }
         */
         viewModelScope.launch {
+            // TODO Переделать
             try {
-                val response = RetrofitClient.weatherService.getWeather(city, apiKey)
+                val response = RetrofitClient_old.weatherServiceOld.getWeather(city, apiKey)
                 _state.value = WeatherState.SuccessResponse(response)
             } catch (e: Exception) {
                 _state.value = WeatherState.Error(e.message ?: "Unknown error")
