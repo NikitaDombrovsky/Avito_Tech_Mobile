@@ -37,14 +37,16 @@ import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivity.WeatherApp
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
-    private val vm: WeatherViewModel_ by viewModel<WeatherViewModel_>()
+    //private val vm: WeatherViewModel_ by viewModel<WeatherViewModel_>()
+    private val vm: TestViewModel by viewModel<TestViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
         setContent {
             AppTheme {
-                vm.reduce(WeatherEvent.Loading)
+               // vm.reduce(WeatherEvent.Loading)
+                //val state by vm.state.collectAsState()
                 WeatherApp()
             }
         }
