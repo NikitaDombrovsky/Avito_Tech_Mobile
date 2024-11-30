@@ -1,24 +1,22 @@
-package com.example.data.storage
+package com.example.datamodule.storage
 
-import com.example.domain.models.CurrentWeather.Clouds
-import com.example.domain.models.CurrentWeather.Coord
-import com.example.domain.models.CurrentWeather.Main
-import com.example.domain.models.CurrentWeather.Sys
-import com.example.domain.models.CurrentWeather.Weather
-import com.example.domain.models.CurrentWeather.WeatherList
-import com.example.domain.models.CurrentWeather.Wind
+
+
+import android.util.Log
+import com.example.domain.models.CurrentWeather.WeatherList_Model
+import com.example.domain.models.CurrentWeather.Weather_Model
 
 
 data class WeatherListEntity(
-    val coord: Coord,
-    val weather: List<Weather>,
+   // val coordModel: CoordEntity, //TODO
+    val weather: List<WeatherEntity>,
     val base: String,
-    val main: Main,
+    val main: MainEntity,
     val visibility: Long,
-    val wind: Wind,
-    val clouds: Clouds,
+    val wind: WindEntity,
+   // val cloudsModel: CloudsEntity, //TODO
     val dt: Long,
-    val sys: Sys,
+   // val sysModel: SysEntity, //TODO
     val timezone: Long,
     val id: Long,
     val name: String,
@@ -27,38 +25,65 @@ data class WeatherListEntity(
     ) {
     companion object {}
 }
-fun WeatherListEntity.toModel(): WeatherList{
-    return WeatherList(
-        coord = coord,
-        weather = weather,
+fun WeatherListEntity.toModel(): WeatherList_Model{
+    // TODO Я бля хуй знает что с TODO делать
+    val listWeather : ArrayList<Weather_Model> = ArrayList<Weather_Model>()
+    for (item in weather){
+        listWeather.add(item.toModel())
+    }
+    return WeatherList_Model(
+        weather = listWeather,
         base = base,
-        main = main,
+        main = main.toModel(),
         visibility = visibility,
-        wind = wind,
-        clouds = clouds,
+        wind = wind.toModel(),
         dt = dt,
-        sys =  sys,
         timezone = timezone,
         id = id,
         name = name,
         cod =  cod,
     )
 }
-fun WeatherListEntity.Companion.fromModel(weatherList: WeatherList): WeatherListEntity {
+/*fun WeatherListEntity.toModel(): WeatherList_Model{
+  // TODO Я бля хуй знает что с TODO делать
+    val listWeather : ArrayList<Weather_Model> = ArrayList<Weather_Model>()
+    for (item in weather){
+        listWeather.add(item.toModel())
+    }
+    return WeatherList_Model(
+        coordModel = coordModel.toModel(),
+        weather = listWeather,
+        base = base,
+        main = main.toModel(),
+        visibility = visibility,
+        wind = wind.toModel(),
+        cloudsModel = cloudsModel.toModel(),
+        dt = dt,
+        sysModel =  sysModel.toModel(),
+        timezone = timezone,
+        id = id,
+        name = name,
+        cod =  cod,
+    )
+}*/
+// TODO Я не понимаю как вызвать fromModel
+/*
+fun WeatherListEntity.Companion.fromModel(weatherList: WeatherList_Model): WeatherListEntity {
     return WeatherListEntity(
-        weatherList.coord,
-        weatherList.weather,
-        weatherList.base,
-        weatherList.main,
-        weatherList.visibility,
-        weatherList.wind,
-        weatherList.clouds,
-        weatherList.dt,
-        weatherList.sys,
-        weatherList.timezone,
-        weatherList.id,
-        weatherList.name,
-        weatherList.cod
+        coordModel = TODO(),
+        weather = TODO(),
+        base = TODO(),
+        main = TODO(),
+        visibility = TODO(),
+        wind = TODO(),
+        cloudsModel = TODO(),
+        dt = TODO(),
+        sysModel = TODO(),
+        timezone = TODO(),
+        id = TODO(),
+        name = TODO(),
+        cod = TODO()
     )
 }
+*/
 

@@ -46,24 +46,6 @@ class MainActivity : ComponentActivity() {
             AppTheme {
                 vm.reduce(WeatherEvent.Loading)
                 WeatherApp()
-                /*              Scaffold(
-                                  topBar = {
-                                      TopAppBar(
-                                          title = { Text("Weather App") }
-                                      )
-                                  },
-                                  modifier = Modifier.fillMaxSize()
-                              ) { innerPadding ->
-
-                                  Greeting(
-                                      name = "Android",
-                                      modifier = Modifier.padding(innerPadding)
-                                  )
-                              }
-
-
-                              RetrofitQuotesTest_()*/
-
             }
         }
     }
@@ -83,39 +65,8 @@ class MainActivity : ComponentActivity() {
         }
     }
 }*/
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MaterialTheme {
-        Greeting("Android")
-    }
-}
-
-/* @Preview(showBackground = true, wallpaper = Wallpapers.NONE)
-@Composable
-fun GreetingPreviewTheme() {
-    AppTheme() {
-        Greeting("Android")
-    }
-}*/
 
 
-/*class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            WeatherApp()
-        }
-    }
-}*/
 
 /*fun RetrofitQuotesTest(){
     val quotesApi = RetrofitHelper.getInstance().create(QuotesApi::class.java)

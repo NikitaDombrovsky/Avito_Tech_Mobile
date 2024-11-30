@@ -1,6 +1,6 @@
-package com.example.data.storage
+package com.example.datamodule.storage
 
-import com.example.domain.models.CurrentWeather.Sys
+import com.example.domain.models.CurrentWeather.Sys_Model
 
 
 data class SysEntity(
@@ -13,8 +13,8 @@ data class SysEntity(
     companion object {}
 }
 
-fun SysEntity.toModel(): Sys {
-    return Sys(
+fun SysEntity.toModel(): Sys_Model {
+    return Sys_Model(
         type = type,
         id = id,
         country = country,
@@ -23,12 +23,12 @@ fun SysEntity.toModel(): Sys {
     )
 }
 
-fun SysEntity.Companion.fromModel(sys: Sys): SysEntity {
+fun SysEntity.Companion.fromModel(sysModel: Sys_Model): SysEntity {
     return SysEntity(
-        sys.type,
-        sys.id,
-        sys.country,
-        sys.sunrise,
-        sys.sunset,
+        sysModel.type,
+        sysModel.id,
+        sysModel.country,
+        sysModel.sunrise,
+        sysModel.sunset,
     )
 }

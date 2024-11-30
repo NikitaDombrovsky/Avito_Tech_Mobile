@@ -1,9 +1,9 @@
 package com.example.domain.repository
 
-import com.example.domain.models.CurrentWeather.WeatherList
+import com.example.domain.models.CurrentWeather.WeatherList_Model
 
 interface WeatherRepository {
-    suspend fun getCurrentWeather(): List<WeatherList>
+    suspend fun getCurrentWeather(city: String): WeatherList_Model
 }
 
 /*

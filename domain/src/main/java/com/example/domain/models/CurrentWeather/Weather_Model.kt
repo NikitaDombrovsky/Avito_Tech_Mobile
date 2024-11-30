@@ -7,7 +7,7 @@ package com.example.domain.models.CurrentWeather
     val icon : String
 )*/
 
-data class Weather(
+data class Weather_Model(
     val id: Long,
     val main: String,
     val description: String,

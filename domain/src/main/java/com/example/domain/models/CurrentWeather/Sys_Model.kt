@@ -1,7 +1,7 @@
 package com.example.domain.models.CurrentWeather
 
 
-data class Sys(
+data class Sys_Model(
     val type: Long,
     val id: Long,
     val country: String,

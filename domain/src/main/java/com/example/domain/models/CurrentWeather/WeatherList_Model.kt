@@ -1,21 +1,23 @@
 package com.example.domain.models.CurrentWeather
 
-class WeatherList(
-    val coord: Coord,
-    val weather: List<Weather>,
+class WeatherList_Model(
+    //val coordModel: Coord_Model,
+    val weather: List<Weather_Model>,
     val base: String,
-    val main: Main,
+    val main: Main_Model,
     val visibility: Long,
-    val wind: Wind,
-    val clouds: Clouds,
+    val wind: Wind_Model,
+   // val cloudsModel: Clouds_Model,
     val dt: Long,
-    val sys: Sys,
+   // val sysModel: Sys_Model,
     val timezone: Long,
     val id: Long,
     val name: String,
     val cod: Long,
 
-    )
+    ) {
+
+}
 
 
 /*data class Root(

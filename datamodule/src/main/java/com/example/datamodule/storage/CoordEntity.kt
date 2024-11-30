@@ -1,6 +1,6 @@
-package com.example.data.storage
+package com.example.datamodule.storage
 
-import com.example.domain.models.CurrentWeather.Coord
+import com.example.domain.models.CurrentWeather.Coord_Model
 
 
 data class CoordEntity(
@@ -9,15 +9,15 @@ data class CoordEntity(
     companion object {}
 }
 
-fun CoordEntity.toModel(): Coord {
-    return Coord(
+fun CoordEntity.toModel(): Coord_Model {
+    return Coord_Model(
         lon = lon, lat = lat
     )
 }
 
-fun CoordEntity.Companion.fromModel(coord: Coord): CoordEntity {
+fun CoordEntity.Companion.fromModel(coordModel: Coord_Model): CoordEntity {
     return CoordEntity(
-        coord.lon,
-        coord.lat
+        coordModel.lon,
+        coordModel.lat
     )
 }

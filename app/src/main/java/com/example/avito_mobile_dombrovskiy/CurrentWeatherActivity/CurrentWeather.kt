@@ -1,5 +1,6 @@
 package com.example.avito_mobile_dombrovskiy.CurrentWeatherActivity
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -48,9 +50,9 @@ fun WeatherApp(viewModel: WeatherViewModel_ = viewModel()) {
                     CircularProgressIndicator()
                 }*/
             }
-            is WeatherState.SuccessResponse -> {
+ /*           is WeatherState.SuccessResponse -> {
 
-            }
+            }*/
             is WeatherState.Success -> {
                 val weatherResponse = (weatherState as WeatherState.Success).weatherResponse
                 topBarCityName = weatherResponse.name
@@ -64,7 +66,9 @@ fun WeatherApp(viewModel: WeatherViewModel_ = viewModel()) {
                     Text(text = "Temperature: ${weatherResponse.main.temp}°C")
                     Text(text = "Humidity: ${weatherResponse.main.humidity}%")
                     Text(text = "Description: ${weatherResponse.weather[0].description}")
+
                 }
+
             }
 
             is WeatherState.Error -> {
@@ -111,6 +115,7 @@ fun ErrorActivity(errorMessage: String){
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = "Error: $errorMessage")
+        Text(text = "Error: $errorMessage", color = MaterialTheme.colorScheme.error)
+        Log.wtf("Error:", errorMessage)
     }
 }

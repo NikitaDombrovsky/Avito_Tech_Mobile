@@ -1,5 +1,7 @@
 package com.example.avito_mobile_dombrovskiy
 
+import com.example.avito_mobile_dombrovskiy.CurrentWeather.WeatherList_Pr
+import com.example.domain.models.CurrentWeather.WeatherList_Model
 import org.intellij.lang.annotations.Language
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

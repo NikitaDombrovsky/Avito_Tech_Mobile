@@ -6,7 +6,7 @@ package com.example.domain.models.CurrentWeather
 
 )*/
 
-data class Main(
+data class Main_Model(
     val temp: Double,
     //@JsonProperty("feels_like")
     val feels_like: Double,

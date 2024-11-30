@@ -5,7 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.avito_mobile_dombrovskiy.Core.UiEvent
 import com.example.avito_mobile_dombrovskiy.Core.UiState
-import com.example.data.storage.WeatherEntity
+
+
+import com.example.datamodule.storage.WeatherEntity
+
 import com.example.domain.usecase.CurrentUseCase.GetCurrentWeatherUseCase
 
 
@@ -48,7 +51,7 @@ class WeatherViewModel_(
 
             }*/
             WeatherEvent.Loading -> {
-                //_state.tryEmit(MainUIState.Empty)
+                _state.tryEmit(WeatherState.Loading)
             }
             is WeatherEvent.Success ->{
 /*                viewModelScope.launch {
@@ -66,9 +69,18 @@ class WeatherViewModel_(
 
         }
     }
-    // suspend
+
+    // TODO suspend
     fun fetchWeather(city: String, apiKey: String) {
         getCurrentWeatherUseCase//().map { weather ->  }
+        viewModelScope.launch {
+            try {
+                _state.value = WeatherState.Success(WeatherResponse.fromModel(getCurrentWeatherUseCase(city)))
+            } catch (e: Exception) {
+                _state.value = WeatherState.Error(e.message ?: "Unknown error")
+            }
+        }
+
         /*
                 getTasksUseCase().map {tasks -> TaskPreviewView(
             id = tasks.id,
@@ -79,14 +91,15 @@ class WeatherViewModel_(
             colorOfCategory = tasks.colorOfCategory)
         }
         */
-        viewModelScope.launch {
+
+/*        viewModelScope.launch {
             try {
                 val response = RetrofitClient.weatherService.getWeather(city, apiKey)
                 _state.value = WeatherState.SuccessResponse(response)
             } catch (e: Exception) {
                 _state.value = WeatherState.Error(e.message ?: "Unknown error")
             }
-        }
+        }*/
     }
 
 
@@ -101,8 +114,9 @@ class WeatherViewModel_(
 }
 sealed class WeatherState: UiState {
     object Loading : WeatherState()
-    data class Success(val weatherResponse: WeatherEntity) : WeatherState()
-    data class SuccessResponse(val weatherResponse: WeatherResponse) : WeatherState()
+    data class Success(val weatherResponse: WeatherResponse) : WeatherState()
+    //data class Success(val weatherResponse: WeatherEntity) : WeatherState()
+   // data class SuccessResponse(val weatherResponse: WeatherResponse) : WeatherState()
     data class Error(val message: String) : WeatherState()
 }
 
