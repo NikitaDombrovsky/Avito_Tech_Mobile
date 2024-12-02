@@ -1,4 +1,4 @@
-package com.example.datamodule.storage
+package com.example.datamodule.storage.CurrentWeather
 
 import com.example.domain.models.CurrentWeather.Clouds_Model
 

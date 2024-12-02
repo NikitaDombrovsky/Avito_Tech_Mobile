@@ -1,39 +1,39 @@
 package com.example.avito_mobile_dombrovskiy
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.Wallpapers
-/*import com.example.avito_mobile_dombrovskiy.TestRetrofit.Weather.RetrofitHelper
-import com.example.avito_mobile_dombrovskiy.TestRetrofit.Weather.WeatherApi*/
 import com.example.avito_mobile_dombrovskiy.ui.theme.AppTheme
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.unit.dp
 
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivity.WeatherApp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivity.ErrorActivity
+import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivity.LoadingActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
@@ -43,12 +43,123 @@ class MainActivity : ComponentActivity() {
 
         enableEdgeToEdge()
         setContent {
+            //val navController = rememberNavController()
             AppTheme {
+                //MyApp()
                 vm.reduce(WeatherEvent.Loading)
-                WeatherApp()
+                vm.fetchWeather("Omsk", "4dfc05c3309bcd397630c1c51dda583b")
+                // WeatherApp_TestSvipe()
+                // WeatherApp()
+                //  val weatherState by vm.state.collectAsState()
+                //  CurrentWeather(weatherState)
+                WeatherActivty()
+                /*                NavHost(navController = navController, startDestination = "home") {
+                                    composable("home") {
+                                        CurrentWeather(weatherState, onTestClick = {
+                                            navController.navigate("taskDetails") //TODO Убрать OnClick
+
+                                        }, navController)
+                                        // CurrentWeatherActivity(weatherResponse)
+
+                                    }
+                                    composable("settings") {
+                                        SecondScreen(navController)
+                *//*                        CurrentWeather(weatherState, onTestClick = {
+                            navController.navigate("taskDetails")
+
+                        }, navController)*//*
+                    }
+                }*/
+                // vm.fetchWeather("Omsk", "4dfc05c3309bcd397630c1c51dda583b")
             }
         }
     }
+
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun WeatherActivty(
+    viewModel: WeatherViewModel_ = viewModel()
+) {
+    val weatherState by viewModel.state.collectAsState()
+    var topBarCityName by remember { mutableStateOf("Пусто") } //TODO Ресурсы
+    val navController = rememberNavController()
+    /*    val drawerState = rememberDrawerState(DrawerValue.Closed)
+        val scope = rememberCoroutineScope()*/
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    //var text by remember { mutableStateOf("Погода в $topBarCityName") }
+
+/*                    TextField(
+                        value = "Погода в $topBarCityName",
+                        onValueChange = { topBarCityName = it },
+                        label = { Text("Label") }
+                    )*/
+                    Text("Погода в $topBarCityName")
+                        }, //TODO Ресурсы
+                navigationIcon = {
+                    IconButton(onClick = {/* scope.launch { drawerState.open() }*/ }) {
+                        Icon(Icons.Default.Search, contentDescription = "Меню") //TODO Ресурсы
+                    }
+                }
+            )
+        }
+    ) { innerPadding ->
+        when (weatherState) {
+            is WeatherUIState.Loading -> {
+                LoadingActivity(Modifier.padding(innerPadding))
+            }
+
+            is WeatherUIState.Success -> {
+
+                val weatherResponse = (weatherState as WeatherUIState.Success).weatherResponse
+                topBarCityName = weatherResponse.name
+
+                Column(modifier = Modifier.fillMaxSize()) {
+                    Box(
+                        modifier = Modifier
+
+                            //.size(10.dp)
+                            //.fillMaxSize()
+                            .draggable(
+                                state = rememberDraggableState { delta ->
+                                    if (delta > 0) {
+                                        navController.navigate("home")
+                                    } else if (delta < 0) {
+                                        navController.navigate("settings")
+                                    }
+                                },
+                                orientation = Orientation.Horizontal
+                            )
+                    ) {
+                        NavHost(navController = navController, startDestination = "home") {
+                            composable("home") {
+                                CurrentWeatherActivity(weatherResponse)
+
+                            }
+                            composable("settings") {
+                                SecondScreen(navController)
+                            }
+                        }
+                    }
+                }
+            }
+
+            is WeatherUIState.Error -> {
+                val errorMessage = (weatherState as WeatherUIState.Error).message
+                ErrorActivity(errorMessage)
+            }
+
+            is WeatherUIState.WeeklySuccess -> TODO()
+        }
+    }
+    viewModel.fetchWeather("Omsk", "4dfc05c3309bcd397630c1c51dda583b")
+
+
 }
 
 
@@ -65,7 +176,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }*/
-
 
 
 /*fun RetrofitQuotesTest(){

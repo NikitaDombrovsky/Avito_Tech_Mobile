@@ -1,9 +1,7 @@
 package com.example.avito_mobile_dombrovskiy.CurrentWeatherActivity
 
 import android.util.Log
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
@@ -20,9 +18,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.avito_mobile_dombrovskiy.WeatherState
+import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivity
+import com.example.avito_mobile_dombrovskiy.WeatherUIState
 import com.example.avito_mobile_dombrovskiy.WeatherViewModel_
 
 
@@ -39,7 +37,7 @@ fun WeatherApp(viewModel: WeatherViewModel_ = viewModel()) {
         }
     ) { innerPadding ->
         when (weatherState) {
-            is WeatherState.Loading -> {
+            is WeatherUIState.Loading -> {
                 LoadingActivity(Modifier.padding(innerPadding))
 /*                Box(
                     modifier = Modifier
@@ -53,10 +51,12 @@ fun WeatherApp(viewModel: WeatherViewModel_ = viewModel()) {
  /*           is WeatherState.SuccessResponse -> {
 
             }*/
-            is WeatherState.Success -> {
-                val weatherResponse = (weatherState as WeatherState.Success).weatherResponse
+            is WeatherUIState.Success -> {
+                val weatherResponse = (weatherState as WeatherUIState.Success).weatherResponse
                 topBarCityName = weatherResponse.name
-                Column(
+                CurrentWeatherActivity(weatherResponse)
+
+/*                Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(16.dp),
@@ -67,12 +67,12 @@ fun WeatherApp(viewModel: WeatherViewModel_ = viewModel()) {
                     Text(text = "Humidity: ${weatherResponse.main.humidity}%")
                     Text(text = "Description: ${weatherResponse.weather[0].description}")
 
-                }
+                }*/
 
             }
 
-            is WeatherState.Error -> {
-                val errorMessage = (weatherState as WeatherState.Error).message
+            is WeatherUIState.Error -> {
+                val errorMessage = (weatherState as WeatherUIState.Error).message
                 ErrorActivity(errorMessage)
 /*                Box(
                     modifier = Modifier.fillMaxSize(),
@@ -80,9 +80,10 @@ fun WeatherApp(viewModel: WeatherViewModel_ = viewModel()) {
                 ) {
                     Text(text = "Error: $errorMessage")
                 }*/
+
             }
 
-
+            is WeatherUIState.WeeklySuccess -> TODO()
         }
     }
 
@@ -99,23 +100,14 @@ fun LoadingActivity(modifier: Modifier) {
         CircularProgressIndicator()
     }
 }
-@Composable
-fun CurrentWeatherActivity(modifier: Modifier) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
-    }
-}
+
 @Composable
 fun ErrorActivity(errorMessage: String){
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = "Error: $errorMessage", color = MaterialTheme.colorScheme.error)
+        Text(text = "Error: $errorMessage", color =  MaterialTheme.colorScheme.error)
         Log.wtf("Error:", errorMessage)
     }
 }

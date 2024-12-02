@@ -5,18 +5,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.avito_mobile_dombrovskiy.Core.UiEvent
 import com.example.avito_mobile_dombrovskiy.Core.UiState
+import com.example.avito_mobile_dombrovskiy.WeeklyWeatherTest.WeeklyCity_Pr
+import com.example.avito_mobile_dombrovskiy.WeeklyWeatherTest.WeeklyMain_Pr
+import com.example.avito_mobile_dombrovskiy.WeeklyWeatherTest.WeeklyWeatherList_Pr
+import com.example.avito_mobile_dombrovskiy.WeeklyWeatherTest.WeeklyWeather_Pr
+import com.example.avito_mobile_dombrovskiy.WeeklyWeatherTest.fromModel
+import com.example.avito_mobile_dombrovskiy.WeeklyWeatherTest.toModel
 
 
-import com.example.datamodule.storage.WeatherEntity
+import com.example.datamodule.storage.CurrentWeather.WeatherEntity
 
 import com.example.domain.usecase.CurrentUseCase.GetCurrentWeatherUseCase
+import com.example.domain.usecase.WeeklyUseCase.GetWeeklyWeatherUseCase
 
 
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import java.time.LocalDateTime
 
 /*
 class WeatherViewModel : ViewModel() {
@@ -39,45 +45,103 @@ class WeatherViewModel : ViewModel() {
 
 
 class WeatherViewModel_(
-    private val getCurrentWeatherUseCase: GetCurrentWeatherUseCase
-) : ViewModel(){
-    private val _state = MutableStateFlow<WeatherState>(WeatherState.Loading)
-    val state: StateFlow<WeatherState> = _state.asStateFlow()
+    private val getCurrentWeatherUseCase: GetCurrentWeatherUseCase,
+    private val getWeeklyWeatherUseCase: GetWeeklyWeatherUseCase
+) : ViewModel() {
+    private val _state = MutableStateFlow<WeatherUIState>(WeatherUIState.Loading)
+    val state: StateFlow<WeatherUIState> = _state.asStateFlow()
 
-    fun reduce(event: WeatherEvent){
-        when(event){
-/*            MainEvent.ShowEmpty -> {
-                _state.tryEmit(MainUIState.Empty)
+    fun reduce(event: WeatherEvent) {
+        when (event) {
+            /*            MainEvent.ShowEmpty -> {
+                            _state.tryEmit(MainUIState.Empty)
 
-            }*/
+                        }*/
             WeatherEvent.Loading -> {
-                _state.tryEmit(WeatherState.Loading)
+                _state.tryEmit(WeatherUIState.Loading)
             }
-            is WeatherEvent.Success ->{
-/*                viewModelScope.launch {
-                    _state.tryEmit(MainUIState.Tasks(getTasks()))
-                    //getTasks()
-                }*/
+
+            is WeatherEvent.Success -> {
+                /*                viewModelScope.launch {
+                                    _state.tryEmit(MainUIState.Tasks(getTasks()))
+                                    //getTasks()
+                                }*/
             }
+
             is WeatherEvent.Error -> {
 
 
             }
-/*            WeatherEvent.HideDialog -> TODO()
+            /*            WeatherEvent.HideDialog -> TODO()
 
-            WeatherEvent.ShowDialog -> TODO()*/
+                        WeatherEvent.ShowDialog -> TODO()*/
 
         }
     }
 
     // TODO suspend
-    fun fetchWeather(city: String, apiKey: String) {
-        getCurrentWeatherUseCase//().map { weather ->  }
+    suspend fun fetchWeeklyWeather(city: String, apiKey: String) {
+        //TODO Ты че написал
+        //val t : WeeklyWeatherList_Pr =
+        getWeeklyWeatherUseCase(city).map {data -> WeeklyWeatherList_Pr.fromModel(data)}
+/*        getWeeklyWeatherUseCase(city).map { weatherList ->
+            WeeklyWeatherList_Pr(
+                main = WeeklyMain_Pr(weatherList.main.temp, weatherList.main.humidity),
+                weather = weatherList.weather.map { weather ->
+                    WeeklyWeather_Pr(
+                        description = weather.description,
+                        icon = weather.icon
+                    )
+
+                },
+                city = WeeklyCity_Pr(
+                    name = weatherList.city.name
+                )
+
+
+            )
+        }*/
+        //getWeeklyWeatherUseCase//().map { weather ->  }
         viewModelScope.launch {
             try {
-                _state.value = WeatherState.Success(WeatherResponse.fromModel(getCurrentWeatherUseCase(city)))
+                _state.tryEmit(
+                    WeatherUIState.WeeklySuccess(
+                        getWeeklyWeatherUseCase(city).map {data -> WeeklyWeatherList_Pr.fromModel(data)}
+   /*                     getWeeklyWeatherUseCase(city).map { weatherList ->
+                            WeeklyWeatherList_Pr(
+                                main = WeeklyMain_Pr(weatherList.main.temp, weatherList.main.humidity),
+                                weather = weatherList.weather.map { weather ->
+                                    WeeklyWeather_Pr(
+                                        description = weather.description,
+                                        icon = weather.icon
+                                    )
+                                },
+                                city = WeeklyCity_Pr(
+                                    name = weatherList.city.name
+                                )
+                            )
+                        }*/
+                    )
+                )
+                /*                _state.value = WeatherUIState.WeeklySuccess(WeeklyWeatherList_Pr(
+                                    //TODO Ты че написал
+                                    getWeeklyWeatherUseCase(city).map {weatherList -> WeeklyWeatherList_Pr(
+                                        main = WeeklyMain_Pr(weatherList.main.temp, weatherList.main.humidity),
+                                        weather = weatherList.weather.map { weather -> WeeklyWeather_Pr(
+                                            description = weather.description,
+                                            icon = weather.icon
+                                        )
+
+                                        },
+                                        city =  WeeklyCity_Pr(
+                                            name = weatherList.city.name
+                                        )
+                                    ).toModel()
+                                    }
+                                )
+                                )*/
             } catch (e: Exception) {
-                _state.value = WeatherState.Error(e.message ?: "Unknown error")
+                _state.value = WeatherUIState.Error(e.message ?: "Unknown error")
             }
         }
 
@@ -92,14 +156,47 @@ class WeatherViewModel_(
         }
         */
 
-/*        viewModelScope.launch {
+        /*        viewModelScope.launch {
+                    try {
+                        val response = RetrofitClient.weatherService.getWeather(city, apiKey)
+                        _state.value = WeatherState.SuccessResponse(response)
+                    } catch (e: Exception) {
+                        _state.value = WeatherState.Error(e.message ?: "Unknown error")
+                    }
+                }*/
+    }
+
+    // TODO suspend
+    fun fetchWeather(city: String, apiKey: String) {
+        getCurrentWeatherUseCase//().map { weather ->  }
+        viewModelScope.launch {
             try {
-                val response = RetrofitClient.weatherService.getWeather(city, apiKey)
-                _state.value = WeatherState.SuccessResponse(response)
+                _state.value =
+                    WeatherUIState.Success(WeatherResponse.fromModel(getCurrentWeatherUseCase(city)))
             } catch (e: Exception) {
-                _state.value = WeatherState.Error(e.message ?: "Unknown error")
+                _state.value = WeatherUIState.Error(e.message ?: "Unknown error")
             }
-        }*/
+        }
+
+        /*
+                getTasksUseCase().map {tasks -> TaskPreviewView(
+            id = tasks.id,
+            title = tasks.title,
+            deadline = tasks.deadline,
+            changedAt = tasks.changedAt,
+            checkedStatus = tasks.checkedStatus,
+            colorOfCategory = tasks.colorOfCategory)
+        }
+        */
+
+        /*        viewModelScope.launch {
+                    try {
+                        val response = RetrofitClient.weatherService.getWeather(city, apiKey)
+                        _state.value = WeatherState.SuccessResponse(response)
+                    } catch (e: Exception) {
+                        _state.value = WeatherState.Error(e.message ?: "Unknown error")
+                    }
+                }*/
     }
 
 
@@ -112,24 +209,26 @@ class WeatherViewModel_(
         super.onCleared()
     }
 }
-sealed class WeatherState: UiState {
-    object Loading : WeatherState()
-    data class Success(val weatherResponse: WeatherResponse) : WeatherState()
+
+sealed class WeatherUIState : UiState {
+    object Loading : WeatherUIState()
+    data class Success(val weatherResponse: WeatherResponse) : WeatherUIState()
+    data class WeeklySuccess(val weatherList: List<WeeklyWeatherList_Pr>) : WeatherUIState()
+
     //data class Success(val weatherResponse: WeatherEntity) : WeatherState()
-   // data class SuccessResponse(val weatherResponse: WeatherResponse) : WeatherState()
-    data class Error(val message: String) : WeatherState()
+    // data class SuccessResponse(val weatherResponse: WeatherResponse) : WeatherState()
+    data class Error(val message: String) : WeatherUIState()
 }
 
-sealed interface WeatherEvent: UiEvent {
+sealed interface WeatherEvent : UiEvent {
 
-    object Loading: WeatherEvent
+    object Loading : WeatherEvent
     data class Success(val weatherResponse: WeatherEntity) : WeatherEvent
     data class Error(val message: String) : WeatherEvent
 
-/*    // TODO Заглушка
-    object ShowDialog: WeatherEvent
-    object HideDialog: WeatherEvent*/
-
+    /*    // TODO Заглушка
+        object ShowDialog: WeatherEvent
+        object HideDialog: WeatherEvent*/
 
 
 }

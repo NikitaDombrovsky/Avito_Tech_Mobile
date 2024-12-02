@@ -9,7 +9,8 @@ import org.koin.dsl.module
 val AppModule = module {
     viewModel<WeatherViewModel_>(){
         WeatherViewModel_(
-            getCurrentWeatherUseCase =  get()
+            getCurrentWeatherUseCase =  get(),
+            getWeeklyWeatherUseCase = get()
             //getTasksUseCase = get()
 
         )

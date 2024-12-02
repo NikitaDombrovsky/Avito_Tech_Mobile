@@ -1,6 +1,7 @@
 package com.example.datamodule.RetrofitWeather
 
-import com.example.datamodule.storage.WeatherListEntity
+import com.example.datamodule.storage.CurrentWeather.WeatherListEntity
+import com.example.datamodule.storage.WeeklyWeather.WeeklyWeatherListEntity
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -12,5 +13,13 @@ interface WeatherService {
         @Query("lang") language: String = "ru",
         @Query("units") units: String = "metric"
     ): WeatherListEntity
+
+    @GET("forecast")
+    suspend fun getWeeklyWeather(
+        @Query("q") city: String,
+        @Query("appid") apiKey: String,
+        @Query("lang") language: String = "ru",
+        @Query("units") units: String = "metric"
+    ): List<WeeklyWeatherListEntity>
 }
 

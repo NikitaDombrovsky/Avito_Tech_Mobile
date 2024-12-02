@@ -18,7 +18,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.avito_mobile_dombrovskiy"
-        minSdk = 24
+        minSdk = 25
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(project(":domain"))
     implementation(project(":datamodule"))
+    implementation(libs.androidx.compose.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -92,6 +93,17 @@ dependencies {
     implementation("io.insert-koin:koin-android:$koin_version") //+
     //Koin Jetpack
     implementation("io.insert-koin:koin-androidx-compose:$koin_version")
+    val nav_version = "2.8.4"
+
+    // Jetpack Compose integration
+    implementation("androidx.navigation:navigation-compose:$nav_version")
+
+    // Views/Fragments integration
+    implementation("androidx.navigation:navigation-fragment:$nav_version")
+    implementation("androidx.navigation:navigation-ui:$nav_version")
+
+    // Feature module support for Fragments
+    implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
 
 
 

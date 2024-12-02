@@ -1,11 +1,49 @@
-package com.example.avito_mobile_dombrovskiy
+package com.example.domain.models.WeeklyWeather
 
 
-import com.example.domain.models.CurrentWeather.Main_Model
-import com.example.domain.models.CurrentWeather.WeatherList_Model
-import com.example.domain.models.CurrentWeather.Weather_Model
-
-
+data class WeeklyWeatherList_Model(
+    val main: WeeklyMain_Model,
+    val weather: List<WeeklyWeather_Model>,
+    val city: WeeklyCity_Model
+) {
+    companion object {}
+}
+data class WeeklyMain_Model(
+    val temp: Double,
+    val humidity: Long
+) {
+    companion object {}
+}
+data class WeeklyWeather_Model (
+    val description: String,
+    val icon: String
+){
+    companion object {}
+}
+data class WeeklyCity_Model(
+    val name: String,
+) {
+    companion object {}
+}
+/*
+fun WeeklyWeatherListEntity.toModel(): WeatherList_Model{
+    val listWeather : ArrayList<Weather_Model> = ArrayList<Weather_Model>()
+    for (item in weather){
+        listWeather.add(item.toModel())
+    }
+    return WeatherList_Model(
+        weather = listWeather,
+        base = base,
+        main = main.toModel(),
+        visibility = visibility,
+        wind = wind.toModel(),
+        dt = dt,
+        timezone = timezone,
+        id = id,
+        name = name,
+        cod =  cod,
+    )
+}
 data class WeatherResponse(
    // val coordModel: Coord_Pr,
     val main: Main,
@@ -53,21 +91,5 @@ fun Weather.Companion.fromModel(weather: Weather_Model): Weather {
         icon = weather.icon
     )
 }
-/*fun WeatherResponse.Companion.toWeather() = WeatherList_Model(
-    coordModel = TODO(),
-    weather = TODO(),
-    base = TODO(),
-    main = TODO(),
-    visibility = TODO(),
-    wind = TODO(),
-    cloudsModel = TODO(),
-    dt = TODO(),
-    sysModel = TODO(),
-    timezone = TODO(),
-    id = TODO(),
-    name = TODO(),
-    cod = TODO()
-    *//*    name = "$firstName $lastName",
-    age = age,
-    tel = tel*//*
-)*/
+*/
+

@@ -5,10 +5,7 @@
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="domain">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="data">
+      <SelectionState runConfigName="PreviewWeatherApp_TestSvipe">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

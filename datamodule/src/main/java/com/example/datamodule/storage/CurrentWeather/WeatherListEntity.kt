@@ -1,10 +1,11 @@
-package com.example.datamodule.storage
+package com.example.datamodule.storage.CurrentWeather
 
 
 
-import android.util.Log
+import com.example.datamodule.storage.WeeklyWeather.toModel
 import com.example.domain.models.CurrentWeather.WeatherList_Model
 import com.example.domain.models.CurrentWeather.Weather_Model
+
 
 
 data class WeatherListEntity(
@@ -26,13 +27,14 @@ data class WeatherListEntity(
     companion object {}
 }
 fun WeatherListEntity.toModel(): WeatherList_Model{
-    // TODO Я бля хуй знает что с TODO делать
-    val listWeather : ArrayList<Weather_Model> = ArrayList<Weather_Model>()
+
+    //val listWeather: List<Weather_Model> = weather.map { it.toModel() }
+/*    val listWeather : ArrayList<Weather_Model> = ArrayList<Weather_Model>()
     for (item in weather){
         listWeather.add(item.toModel())
-    }
+    }*/
     return WeatherList_Model(
-        weather = listWeather,
+        weather = weather.map { it.toModel() },
         base = base,
         main = main.toModel(),
         visibility = visibility,
@@ -44,29 +46,8 @@ fun WeatherListEntity.toModel(): WeatherList_Model{
         cod =  cod,
     )
 }
-/*fun WeatherListEntity.toModel(): WeatherList_Model{
-  // TODO Я бля хуй знает что с TODO делать
-    val listWeather : ArrayList<Weather_Model> = ArrayList<Weather_Model>()
-    for (item in weather){
-        listWeather.add(item.toModel())
-    }
-    return WeatherList_Model(
-        coordModel = coordModel.toModel(),
-        weather = listWeather,
-        base = base,
-        main = main.toModel(),
-        visibility = visibility,
-        wind = wind.toModel(),
-        cloudsModel = cloudsModel.toModel(),
-        dt = dt,
-        sysModel =  sysModel.toModel(),
-        timezone = timezone,
-        id = id,
-        name = name,
-        cod =  cod,
-    )
-}*/
-// TODO Я не понимаю как вызвать fromModel
+
+// TODO Оно не вызывается
 /*
 fun WeatherListEntity.Companion.fromModel(weatherList: WeatherList_Model): WeatherListEntity {
     return WeatherListEntity(
