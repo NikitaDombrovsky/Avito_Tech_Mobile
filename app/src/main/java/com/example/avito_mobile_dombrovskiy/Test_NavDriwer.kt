@@ -43,8 +43,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivity.ErrorActivity
-import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivity.LoadingActivity
 
 
 /*@OptIn(ExperimentalMaterial3Api::class)
@@ -115,7 +113,7 @@ fun WeatherApp_Test(viewModel: WeatherViewModel_ = viewModel()) {
     )
 }*/
 
-@Preview
+/*@Preview
 @Composable
 private fun PreviewWeatherApp_TestSvipe() {
     WeatherApp_TestSvipe()
@@ -127,15 +125,15 @@ fun WeatherApp_TestSvipe(viewModel: WeatherViewModel_ = viewModel()) {
     val weatherState by viewModel.state.collectAsState()
     var topBarCityName by remember { mutableStateOf("Саси") }
     val navController = rememberNavController()
-    /*    val drawerState = rememberDrawerState(DrawerValue.Closed)
-        val scope = rememberCoroutineScope()*/
+    *//*    val drawerState = rememberDrawerState(DrawerValue.Closed)
+        val scope = rememberCoroutineScope()*//*
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Погода в $topBarCityName") },
                 navigationIcon = {
-                    IconButton(onClick = {/* scope.launch { drawerState.open() }*/ }) {
+                    IconButton(onClick = {*//* scope.launch { drawerState.open() }*//* }) {
                         Icon(Icons.Default.Search, contentDescription = "Меню")
                     }
                 }
@@ -194,7 +192,7 @@ fun WeatherApp_TestSvipe(viewModel: WeatherViewModel_ = viewModel()) {
     viewModel.fetchWeather("Omsk", "4dfc05c3309bcd397630c1c51dda583b")
 
 
-}
+}*/
 
 /*@Composable
 private fun CurrentWeatherContent(navController: NavController) {
@@ -221,21 +219,6 @@ private fun CurrentWeatherContent(navController: NavController) {
 }*/
 
 
-@Composable
-fun CurrentWeatherActivity(weatherResponse: WeatherResponse) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = "Temperature: ${weatherResponse.main.temp}°C")
-        Text(text = "Humidity: ${weatherResponse.main.humidity}%")
-        Text(text = "Description: ${weatherResponse.weather[0].description}")
-
-    }
-}
 /*@Composable
 private fun CustomLinearProgressBar() {
     Row(

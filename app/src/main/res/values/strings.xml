@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Avito_Mobile_Dombrovskiy</string>
+    <string name="app_name" translatable="false">Avito_Mobile_Dombrovskiy</string>
+    <string name="weather_title">Weather in </string>
+    <string name="locale">en</string>
 </resources>

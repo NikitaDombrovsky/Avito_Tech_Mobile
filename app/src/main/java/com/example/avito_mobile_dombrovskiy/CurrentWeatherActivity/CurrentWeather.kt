@@ -19,10 +19,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivity
+import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivities.CurrentWeatherActivity
+import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivities.ErrorActivity
+import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivities.LoadingActivity
 import com.example.avito_mobile_dombrovskiy.WeatherUIState
 import com.example.avito_mobile_dombrovskiy.WeatherViewModel_
 
+/*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,6 +42,7 @@ fun WeatherApp(viewModel: WeatherViewModel_ = viewModel()) {
         when (weatherState) {
             is WeatherUIState.Loading -> {
                 LoadingActivity(Modifier.padding(innerPadding))
+*/
 /*                Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -46,16 +50,20 @@ fun WeatherApp(viewModel: WeatherViewModel_ = viewModel()) {
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator()
-                }*/
-            }
- /*           is WeatherState.SuccessResponse -> {
+                }*//*
 
-            }*/
+            }
+ */
+/*           is WeatherState.SuccessResponse -> {
+
+            }*//*
+
             is WeatherUIState.Success -> {
                 val weatherResponse = (weatherState as WeatherUIState.Success).weatherResponse
                 topBarCityName = weatherResponse.name
                 CurrentWeatherActivity(weatherResponse)
 
+*/
 /*                Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -67,19 +75,22 @@ fun WeatherApp(viewModel: WeatherViewModel_ = viewModel()) {
                     Text(text = "Humidity: ${weatherResponse.main.humidity}%")
                     Text(text = "Description: ${weatherResponse.weather[0].description}")
 
-                }*/
+                }*//*
+
 
             }
 
             is WeatherUIState.Error -> {
                 val errorMessage = (weatherState as WeatherUIState.Error).message
                 ErrorActivity(errorMessage)
+*/
 /*                Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(text = "Error: $errorMessage")
-                }*/
+                }*//*
+
 
             }
 
@@ -90,24 +101,4 @@ fun WeatherApp(viewModel: WeatherViewModel_ = viewModel()) {
     // Fetch weather data when the app starts
     viewModel.fetchWeather("Omsk", "4dfc05c3309bcd397630c1c51dda583b")
 }
-@Composable
-fun LoadingActivity(modifier: Modifier) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
-    }
-}
-
-@Composable
-fun ErrorActivity(errorMessage: String){
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(text = "Error: $errorMessage", color =  MaterialTheme.colorScheme.error)
-        Log.wtf("Error:", errorMessage)
-    }
-}
+*/
