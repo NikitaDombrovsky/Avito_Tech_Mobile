@@ -23,6 +23,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -34,16 +35,19 @@ import com.example.avito_mobile_dombrovskiy.SecondScreen
 import com.example.avito_mobile_dombrovskiy.WeatherResponse
 import com.example.avito_mobile_dombrovskiy.WeatherUIState
 import com.example.avito_mobile_dombrovskiy.WeatherViewModel_
+import com.example.avito_mobile_dombrovskiy.WeeklyWeatherActivity.WeatherDay
+import com.example.avito_mobile_dombrovskiy.WeeklyWeatherActivity.WeeklyWeatherList
 
-class TestComposable {
-}
+
+var topBarCityName by mutableStateOf("Пусто")
+//var topBarCityName by remember { mutableStateOf("Пусто") } //TODO Ресурсы
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WeatherActivity_(
     viewModel: WeatherViewModel_ = viewModel()
 ) {
     val weatherState by viewModel.state.collectAsState()
-    var topBarCityName by remember { mutableStateOf("Пусто") } //TODO Ресурсы
+    //var topBarCityName by remember { mutableStateOf("Пусто") } //TODO Ресурсы
     val navController = rememberNavController()
 
     Scaffold(
@@ -51,23 +55,22 @@ fun WeatherActivity_(
             WeatherTopAppBar(topBarCityName)
         }
     ) { innerPadding ->
-        WeatherContent(weatherState, topBarCityName, navController, innerPadding)
+        //WeatherContent(weatherState, topBarCityName, navController, innerPadding)
+        WeatherContent(weatherState, navController, innerPadding)
     }
 
     viewModel.fetchWeather("Omsk", "4dfc05c3309bcd397630c1c51dda583b")
 }
 
-@Composable
-fun Scaffold(topBar: () -> Unit, content: Any) {
 
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WeatherTopAppBar(cityName: String) {
     TopAppBar(
         title = {
-            Text(stringResource(R.string.weather_title) + " " + cityName)
+            Text(stringResource(R.string.weather_title, cityName))
+                //stringResource(R.string.weather_title) + " " + cityName)
         },
         navigationIcon = {
             IconButton(onClick = { /* scope.launch { drawerState.open() } */ }) {
@@ -79,10 +82,11 @@ fun WeatherTopAppBar(cityName: String) {
 @Composable
 fun WeatherContent(
     weatherState: WeatherUIState,
-    topBarCityName: MutableState<String>,
+   // topBarCityName: String,
     navController: NavHostController,
     innerPadding: PaddingValues
 ) {
+   // var cityName by remember { mutableStateOf(topBarCityName) }
     when (weatherState) {
         is WeatherUIState.Loading -> {
             LoadingActivity(Modifier.padding(innerPadding))
@@ -90,7 +94,9 @@ fun WeatherContent(
 
         is WeatherUIState.Success -> {
             val weatherResponse = (weatherState as WeatherUIState.Success).weatherResponse
-            topBarCityName.value = weatherResponse.name
+            topBarCityName = weatherResponse.name
+          //  cityName = weatherResponse.name
+           // topBarCityName.value = weatherResponse.name
 
             Column(modifier = Modifier.fillMaxSize()) {
                 WeatherDraggableBox(navController, weatherResponse)
@@ -131,7 +137,9 @@ fun WeatherNavHost(navController: NavHostController, weatherResponse: WeatherRes
 
         }
         composable("settings") {
-            SecondScreen(navController)
+           // SecondScreen(navController)
+            WeatherListTest()
+
         }
 /*        composable("home") {
             val weatherResponse = (navController.currentBackStackEntry?.arguments?.getParcelable<WeatherResponse>("weatherResponse"))!!
@@ -141,4 +149,42 @@ fun WeatherNavHost(navController: NavHostController, weatherResponse: WeatherRes
             SecondScreen(navController)
         }*/
     }
+}
+@Composable
+fun WeatherListTest(){
+
+    val weatherDays = listOf(
+
+        WeatherDay(
+            dayOfWeek = "Понедельник1",
+            weatherIcon = R.drawable.weather_cloudy, // Замените на ваш идентификатор ресурса
+            temperature = "25°C",
+            description = "Солнечно"
+        ),
+        WeatherDay(
+            dayOfWeek = "Вторник2",
+            weatherIcon = R.drawable.weather_cloudy, // Замените на ваш идентификатор ресурса
+            temperature = "18°C",
+            description = "Облачно"
+        )
+        // Добавьте остальные дни недели
+    )
+
+
+    WeeklyWeatherList(weatherDays = generateWeatherDays(20))
+}
+fun generateWeatherDays(count: Int): List<WeatherDay> {
+    return (0 until count).map { index ->
+        WeatherDay(
+            dayOfWeek = "День" + index,
+            weatherIcon = R.drawable.weather_cloudy,
+            temperature = "25°C",
+            description = "Солнечно"
+        )
+    }
+}
+@Preview
+@Composable
+fun PreviewWeatherListTest(){
+    WeatherListTest()
 }

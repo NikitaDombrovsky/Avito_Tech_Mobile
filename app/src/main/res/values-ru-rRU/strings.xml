@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="weather_title">Погода в </string>
+    <string name="weather_title">Погода в %1$s</string>
     <string name="locale">ru</string>
+    <string name="temperature_text">Температура: %1$s°C</string>
+    <string name="humidity_text">Влажность: %s %%</string>
+    <string name="description_text">Описание: %s</string>
 </resources>

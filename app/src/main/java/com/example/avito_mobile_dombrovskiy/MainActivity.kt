@@ -37,6 +37,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivities.CurrentWeatherActivity
 import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivities.ErrorActivity
 import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivities.LoadingActivity
+import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivities.WeatherActivity_
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
@@ -48,7 +49,7 @@ class MainActivity : ComponentActivity() {
             AppTheme {
                 vm.reduce(WeatherEvent.Loading)
                     //vm.fetchWeather("Omsk", "4dfc05c3309bcd397630c1c51dda583b")
-                WeatherActivty()
+                WeatherActivity_()
 /*                CompositionLocalProvider(LocalCounter provides counterState) {
                     MyScreen()
                 }*/
