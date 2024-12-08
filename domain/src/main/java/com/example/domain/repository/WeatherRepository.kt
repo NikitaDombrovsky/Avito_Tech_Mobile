@@ -4,6 +4,8 @@ import com.example.domain.models.CurrentWeather.WeatherList_Model
 import com.example.domain.models.WeeklyWeather.WeeklyWeatherList_Model
 
 interface WeatherRepository {
+
+
     suspend fun getCurrentWeather(city: String): WeatherList_Model
     suspend fun getWeeklyWeather(city: String): List<WeeklyWeatherList_Model>
 }

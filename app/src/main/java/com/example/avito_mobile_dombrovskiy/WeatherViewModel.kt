@@ -23,6 +23,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import org.intellij.lang.annotations.Language
 
 /*
 class WeatherViewModel : ViewModel() {
@@ -141,7 +142,7 @@ class WeatherViewModel_(
                                 )
                                 )*/
             } catch (e: Exception) {
-                _state.value = WeatherUIState.Error(e.message ?: "Unknown error")
+                _state.value = WeatherUIState.Error(e.localizedMessage ?: "Unknown error")
             }
         }
 
@@ -167,8 +168,8 @@ class WeatherViewModel_(
     }
 
     // TODO suspend
-    fun fetchWeather(city: String, apiKey: String) {
-        getCurrentWeatherUseCase//().map { weather ->  }
+    fun fetchWeather(city: String, language: String){//}, apiKey: String) {
+        //getCurrentWeatherUseCase//().map { weather ->  }
         viewModelScope.launch {
             try {
                 _state.value =

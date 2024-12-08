@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -24,6 +26,11 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        //
+        val properties = Properties()
+        properties.load(project.rootProject.file("apikeys.properties").inputStream())
+        buildConfigField("String", "WEATHER_API_KEY", properties.getProperty("API_KEY"))
+
     }
 
     buildTypes {
@@ -43,6 +50,8 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        // Enable the BuildConfig feature
+        buildConfig = true
         compose = true
     }
 }
@@ -67,6 +76,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0")
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

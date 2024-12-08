@@ -1,5 +1,6 @@
 package com.example.avito_mobile_dombrovskiy
 
+import android.content.pm.ApplicationInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -38,7 +39,10 @@ import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivities.CurrentWeat
 import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivities.ErrorActivity
 import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivities.LoadingActivity
 import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivities.WeatherActivity_
+import org.koin.android.BuildConfig
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
+import java.util.Properties
 
 class MainActivity : ComponentActivity() {
     private val vm: WeatherViewModel_ by viewModel<WeatherViewModel_>()
@@ -50,6 +54,8 @@ class MainActivity : ComponentActivity() {
                 vm.reduce(WeatherEvent.Loading)
                     //vm.fetchWeather("Omsk", "4dfc05c3309bcd397630c1c51dda583b")
                 WeatherActivity_()
+
+                //val apiKey = BuildConfig.API_KEY
 /*                CompositionLocalProvider(LocalCounter provides counterState) {
                     MyScreen()
                 }*/
@@ -136,11 +142,15 @@ fun WeatherActivty(
             is WeatherUIState.WeeklySuccess -> TODO()
         }
     }
-    viewModel.fetchWeather("Omsk", "4dfc05c3309bcd397630c1c51dda583b")
+
+    //viewModel.fetchWeather("Omsk", "4dfc05c3309bcd397630c1c51dda583b")
+    // TODO Получать language из конфигурации
+    viewModel.fetchWeather("Omsk", stringResource(R.string.locale))
     //viewModel.fetchWeather("Omsk", "4dfc05c3309bcd397630c1c51dda583b")
 
 
 }
+
 /*
 var topBarCityName = compositionLocalOf { mutableStateOf("Пусто") }
 @OptIn(ExperimentalMaterial3Api::class)
