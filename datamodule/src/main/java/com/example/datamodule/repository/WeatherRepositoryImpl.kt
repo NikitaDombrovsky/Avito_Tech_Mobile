@@ -1,20 +1,17 @@
 package com.example.datamodule.repository
 
 
-import android.content.pm.ApplicationInfo
 import android.util.Log
-import androidx.core.os.BuildCompat
 import com.example.datamodule.BuildConfig
 import com.example.datamodule.storage.CurrentWeather.toModel
 import com.example.datamodule.RetrofitWeather.RetrofitClient
 import com.example.datamodule.storage.WeeklyWeather.toModel
 import com.example.domain.models.CurrentWeather.WeatherList_Model
-import com.example.domain.models.WeeklyWeather.WeeklyWeatherList_Model
+import com.example.domain.models.WeeklyWeather.WeeklyWeather_Model
 import com.example.domain.repository.WeatherRepository
 
 import java.io.File
 import java.io.FileInputStream
-import java.io.FileNotFoundException
 import java.util.Properties
 
 class WeatherRepositoryImpl() : WeatherRepository {
@@ -42,7 +39,7 @@ class WeatherRepositoryImpl() : WeatherRepository {
 
         )).toModel()*/
     }
-    fun getApiKey(): String {
+/*    fun getApiKey(): String {
         val properties = Properties()
         val localProperties = File("${System.getProperty("user.dir")}/local.properties")
         val localProperties_ = File("/local.properties")
@@ -52,7 +49,7 @@ class WeatherRepositoryImpl() : WeatherRepository {
             throw FileNotFoundException("local.properties file not found")
         }
         return properties.getProperty("API_KEY", "")
-    }
+    }*/
     fun getApiKey_(): String {
 /*        var localProperties_ = Properties()
         localProperties_.load(FileInputStream(rootProject.file("local.properties")))*/
@@ -73,18 +70,46 @@ class WeatherRepositoryImpl() : WeatherRepository {
         return properties.getProperty("API_KEY", "")
     }
 
-
-    override suspend fun getWeeklyWeather(city: String): List<WeeklyWeatherList_Model> {
-        val test = (RetrofitClient.weatherService.getWeeklyWeather(
+    override suspend fun getWeeklyWeather(city: String): WeeklyWeather_Model {
+        val test_ = (RetrofitClient.weeklyWeatherService.getWeeklyWeather_(
             city = "Omsk",
-            apiKey = "4dfc05c3309bcd397630c1c51dda583b",
+            apiKey = BuildConfig.WAPI_KEY,
+            language = "ru",
+            units = "metric"
+
+        ))//.map { weather -> weather.toModel() }
+        Log.e("!", "" + test_)
+        val t1s = test_
+        val test = (RetrofitClient.weeklyWeatherService.getWeeklyWeather_(
+            city = "Omsk",
+            apiKey = BuildConfig.WAPI_KEY,
+            language = "ru",
+            units = "metric"
+
+        )).toModel()
+        return  test
+        TODO("Not yet implemented")
+    }
+/*    override suspend fun getWeeklyWeather(city: String): List<WeeklyWeatherList_Model> {
+        val test_ = (RetrofitClient.weeklyWeatherService.getWeeklyWeather_(
+            city = "Omsk",
+            apiKey = BuildConfig.WAPI_KEY,
+            language = "ru",
+            units = "metric"
+
+        ))//.map { weather -> weather.toModel() }
+        Log.e("!", "" + test_)
+        val t1s = test_
+        val test = (RetrofitClient.weeklyWeatherService.getWeeklyWeather(
+            city = "Omsk",
+            apiKey = BuildConfig.WAPI_KEY,
             language = "ru",
             units = "metric"
 
         )).map { weather -> weather.toModel() }
         return  test
         TODO("Not yet implemented")
-    }
+    }*/
 /*    override suspend fun getAllTasks(): List<TaskModel> {
         return taskStorage.getAllTasks().map { taskGettingDTO -> taskGettingDTO.toModel() }
     }*/

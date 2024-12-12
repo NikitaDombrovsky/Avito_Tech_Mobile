@@ -3,7 +3,7 @@ package com.example.datamodule.storage.CurrentWeather
 import com.example.domain.models.CurrentWeather.Wind_Model
 
 data class WindEntity(
-    val speed: Long,
+    val speed: Double,
     val deg: Long,
 ) {
     companion object {}

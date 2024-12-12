@@ -7,6 +7,7 @@ data class WeatherEntity(
     val main: String,
     val description: String,
     val icon: String,
+
 ) {
     companion object {}
 }

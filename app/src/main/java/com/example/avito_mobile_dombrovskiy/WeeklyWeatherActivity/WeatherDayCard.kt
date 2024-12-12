@@ -1,4 +1,5 @@
 package com.example.avito_mobile_dombrovskiy.WeeklyWeatherActivity
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -11,18 +12,17 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 
 
-data class WeatherDay(
-    val dayOfWeek: String,
-    val weatherIcon: Int, // Идентификатор ресурса иконки
-    val temperature: String,
-    val description: String
-)
 @Composable
 fun WeatherDayCard(weatherDay: WeatherDay) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(
+                15.dp,
+                8.dp,
+                15.dp,
+                8.dp
+            ),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Row(
@@ -45,6 +45,13 @@ fun WeatherDayCard(weatherDay: WeatherDay) {
         }
     }
 }
+
+data class WeatherDay(
+    val dayOfWeek: String,
+    val weatherIcon: Int, // TODO Идентификатор ресурса иконки
+    val temperature: String,
+    val description: String
+)
 
 @Composable
 fun WeeklyWeatherList(weatherDays: List<WeatherDay>) {

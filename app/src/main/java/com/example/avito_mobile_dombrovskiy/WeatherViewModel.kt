@@ -6,9 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.avito_mobile_dombrovskiy.Core.UiEvent
 import com.example.avito_mobile_dombrovskiy.Core.UiState
 import com.example.avito_mobile_dombrovskiy.WeeklyWeatherTest.WeeklyCity_Pr
-import com.example.avito_mobile_dombrovskiy.WeeklyWeatherTest.WeeklyMain_Pr
 import com.example.avito_mobile_dombrovskiy.WeeklyWeatherTest.WeeklyWeatherList_Pr
-import com.example.avito_mobile_dombrovskiy.WeeklyWeatherTest.WeeklyWeather_Pr
 import com.example.avito_mobile_dombrovskiy.WeeklyWeatherTest.fromModel
 import com.example.avito_mobile_dombrovskiy.WeeklyWeatherTest.toModel
 
@@ -79,93 +77,22 @@ class WeatherViewModel_(
 
         }
     }
-
+/*
     // TODO suspend
     suspend fun fetchWeeklyWeather(city: String, apiKey: String) {
-        //TODO Ты че написал
-        //val t : WeeklyWeatherList_Pr =
         getWeeklyWeatherUseCase(city).map {data -> WeeklyWeatherList_Pr.fromModel(data)}
-/*        getWeeklyWeatherUseCase(city).map { weatherList ->
-            WeeklyWeatherList_Pr(
-                main = WeeklyMain_Pr(weatherList.main.temp, weatherList.main.humidity),
-                weather = weatherList.weather.map { weather ->
-                    WeeklyWeather_Pr(
-                        description = weather.description,
-                        icon = weather.icon
-                    )
-
-                },
-                city = WeeklyCity_Pr(
-                    name = weatherList.city.name
-                )
-
-
-            )
-        }*/
-        //getWeeklyWeatherUseCase//().map { weather ->  }
         viewModelScope.launch {
             try {
                 _state.tryEmit(
                     WeatherUIState.WeeklySuccess(
                         getWeeklyWeatherUseCase(city).map {data -> WeeklyWeatherList_Pr.fromModel(data)}
-   /*                     getWeeklyWeatherUseCase(city).map { weatherList ->
-                            WeeklyWeatherList_Pr(
-                                main = WeeklyMain_Pr(weatherList.main.temp, weatherList.main.humidity),
-                                weather = weatherList.weather.map { weather ->
-                                    WeeklyWeather_Pr(
-                                        description = weather.description,
-                                        icon = weather.icon
-                                    )
-                                },
-                                city = WeeklyCity_Pr(
-                                    name = weatherList.city.name
-                                )
-                            )
-                        }*/
                     )
                 )
-                /*                _state.value = WeatherUIState.WeeklySuccess(WeeklyWeatherList_Pr(
-                                    //TODO Ты че написал
-                                    getWeeklyWeatherUseCase(city).map {weatherList -> WeeklyWeatherList_Pr(
-                                        main = WeeklyMain_Pr(weatherList.main.temp, weatherList.main.humidity),
-                                        weather = weatherList.weather.map { weather -> WeeklyWeather_Pr(
-                                            description = weather.description,
-                                            icon = weather.icon
-                                        )
-
-                                        },
-                                        city =  WeeklyCity_Pr(
-                                            name = weatherList.city.name
-                                        )
-                                    ).toModel()
-                                    }
-                                )
-                                )*/
             } catch (e: Exception) {
                 _state.value = WeatherUIState.Error(e.localizedMessage ?: "Unknown error")
             }
         }
-
-        /*
-                getTasksUseCase().map {tasks -> TaskPreviewView(
-            id = tasks.id,
-            title = tasks.title,
-            deadline = tasks.deadline,
-            changedAt = tasks.changedAt,
-            checkedStatus = tasks.checkedStatus,
-            colorOfCategory = tasks.colorOfCategory)
-        }
-        */
-
-        /*        viewModelScope.launch {
-                    try {
-                        val response = RetrofitClient.weatherService.getWeather(city, apiKey)
-                        _state.value = WeatherState.SuccessResponse(response)
-                    } catch (e: Exception) {
-                        _state.value = WeatherState.Error(e.message ?: "Unknown error")
-                    }
-                }*/
-    }
+    }*/
 
     // TODO suspend
     fun fetchWeather(city: String, language: String){//}, apiKey: String) {

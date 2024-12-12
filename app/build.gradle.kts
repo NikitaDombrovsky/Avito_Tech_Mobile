@@ -27,10 +27,10 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         //
-        val properties = Properties()
+        /*val properties = Properties()
         properties.load(project.rootProject.file("apikeys.properties").inputStream())
         buildConfigField("String", "WEATHER_API_KEY", properties.getProperty("API_KEY"))
-
+*/
     }
 
     buildTypes {

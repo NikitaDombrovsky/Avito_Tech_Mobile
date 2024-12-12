@@ -1,32 +1,53 @@
+
 package com.example.avito_mobile_dombrovskiy.WeeklyWeatherTest
 
+import com.example.avito_mobile_dombrovskiy.Main
+import com.example.avito_mobile_dombrovskiy.Weather
+import com.example.avito_mobile_dombrovskiy.WeatherResponse
+import com.example.avito_mobile_dombrovskiy.fromModel
+import com.example.domain.models.CurrentWeather.WeatherList_Model
 import com.example.domain.models.WeeklyWeather.WeeklyCity_Model
-import com.example.domain.models.WeeklyWeather.WeeklyMain_Model
-import com.example.domain.models.WeeklyWeather.WeeklyWeatherList_Model
 import com.example.domain.models.WeeklyWeather.WeeklyWeather_Model
 
-
 data class WeeklyWeatherList_Pr(
-    val main: WeeklyMain_Pr,
-    val weather: List<WeeklyWeather_Pr>,
+  //  val main: WeeklyMain_Pr,
+    //val list: List<WeeklyWeather_Pr>,
+    val list: List<WeatherResponse>,
     val city: WeeklyCity_Pr
 ) {
     companion object {}
 }
 
-fun WeeklyWeatherList_Pr.toModel(): WeeklyWeatherList_Model {
+/*
+fun WeeklyWeatherList_Pr.toModel(): WeeklyWeather_Model {
     // TODO*//*
-    return WeeklyWeatherList_Model(
-        main = main.toModel(),
-        weather = weather.map { it.toModel() },
+    return WeeklyWeather_Model(
+     //   main = main.toModel(),
+        weather = list.map { it.toModel() },
         city = city.toModel()
     )
 }
+*/
 
-fun WeeklyWeatherList_Pr.Companion.fromModel(weatherList: WeeklyWeatherList_Model): WeeklyWeatherList_Pr {
+/*fun WeatherResponse.Companion.fromModel(weatherlistModel: WeatherList_Model): WeatherResponse {
+    var t = weatherlistModel.weather
+    //TODO А как лучше?
+    val listWeather : ArrayList<Weather> = ArrayList<Weather>()
+    for (item in t){
+        listWeather.add(Weather.fromModel(item))
+    }
+    return WeatherResponse(
+        // coordModel = Coord_Pr.fromModel(weatherlistModel.coordModel),
+        main = Main.fromModel(weatherlistModel.main),
+        weather = listWeather,
+        name = weatherlistModel.name
+    )
+
+}*/
+fun WeeklyWeatherList_Pr.Companion.fromModel(weatherList: WeeklyWeather_Model): WeeklyWeatherList_Pr {
     return WeeklyWeatherList_Pr(
-        main = WeeklyMain_Pr.fromModel(weatherList.main),
-        weather = weatherList.weather.map { weather -> WeeklyWeather_Pr.fromModel(weather) },
+       // main = WeeklyMain_Pr.fromModel(weatherList.main),
+        list = weatherList.weather.map { weather -> WeatherResponse.fromModel(weather) },
         city = WeeklyCity_Pr.fromModel(weatherList.city)
 
     )
@@ -52,6 +73,7 @@ fun WeeklyWeatherList_Pr.Companion.fromModel(weatherList: WeeklyWeatherList_Mode
 
     )
 }*/
+/*
 data class WeeklyMain_Pr(
     val temp: Double,
     val humidity: Long
@@ -69,25 +91,9 @@ fun WeeklyMain_Pr.Companion.fromModel(mainModel: WeeklyMain_Model): WeeklyMain_P
         temp = mainModel.temp,
         humidity = mainModel.humidity
     )
-}
-data class WeeklyWeather_Pr (
-    val description: String,
-    val icon: String
-){
-    companion object {}
-}
-fun WeeklyWeather_Pr.toModel(): WeeklyWeather_Model{
-    return WeeklyWeather_Model(
-        description = description,
-        icon = icon
-    )
-}
-fun WeeklyWeather_Pr.Companion.fromModel(weatherModel: WeeklyWeather_Model): WeeklyWeather_Pr {
-    return WeeklyWeather_Pr(
-        description = weatherModel.description,
-        icon = weatherModel.icon
-    )
-}
+}*/
+
+
 data class WeeklyCity_Pr(
     val name: String,
 ) {

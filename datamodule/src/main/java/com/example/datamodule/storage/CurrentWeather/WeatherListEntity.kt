@@ -1,3 +1,4 @@
+
 package com.example.datamodule.storage.CurrentWeather
 
 
@@ -11,7 +12,7 @@ import com.example.domain.models.CurrentWeather.Weather_Model
 data class WeatherListEntity(
    // val coordModel: CoordEntity, //TODO
     val weather: List<WeatherEntity>,
-    val base: String,
+    val base: String? = "",
     val main: MainEntity,
     val visibility: Long,
     val wind: WindEntity,
@@ -20,7 +21,7 @@ data class WeatherListEntity(
    // val sysModel: SysEntity, //TODO
     val timezone: Long,
     val id: Long,
-    val name: String,
+    val name: String? = "",
     val cod: Long,
 
     ) {
@@ -35,14 +36,14 @@ fun WeatherListEntity.toModel(): WeatherList_Model{
     }*/
     return WeatherList_Model(
         weather = weather.map { it.toModel() },
-        base = base,
+        base = if(base != null) base else "",
         main = main.toModel(),
         visibility = visibility,
         wind = wind.toModel(),
         dt = dt,
         timezone = timezone,
         id = id,
-        name = name,
+        name =if(name != null) name else "" ,
         cod =  cod,
     )
 }

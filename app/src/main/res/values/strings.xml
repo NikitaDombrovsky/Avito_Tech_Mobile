@@ -3,6 +3,7 @@
     <string name="weather_title">Weather in %1$s</string>
     <string name="locale">en</string>
     <string name="temperature_text">Temperature: %1$s°C</string>
+    <string name="weeklyTemperature_text" translatable="false">%1$s°C</string>
     <string name="humidity_text">Humidity: %s %%</string>
     <string name="description_text">Description: %s</string>
 </resources>

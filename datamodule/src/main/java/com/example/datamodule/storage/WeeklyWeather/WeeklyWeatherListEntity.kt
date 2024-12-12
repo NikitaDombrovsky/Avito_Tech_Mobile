@@ -1,20 +1,22 @@
+
 package com.example.datamodule.storage.WeeklyWeather
 
 
+import com.example.datamodule.storage.CurrentWeather.WeatherListEntity
+import com.example.datamodule.storage.CurrentWeather.toModel
 import com.example.domain.models.WeeklyWeather.WeeklyCity_Model
-import com.example.domain.models.WeeklyWeather.WeeklyMain_Model
-import com.example.domain.models.WeeklyWeather.WeeklyWeatherList_Model
 import com.example.domain.models.WeeklyWeather.WeeklyWeather_Model
 
 
 data class WeeklyWeatherListEntity(
-    val main: WeeklyMainEntity,
-    val weather: List<WeeklyWeatherEntity>,
+   // val main: WeeklyMainEntity,
+    //val list: List<WeeklyWeatherEntity>,
+    val list: List<WeatherListEntity>,
     val city: WeeklyCityEntity
 ) {
     companion object {}
 }
-fun WeeklyWeatherListEntity.toModel(): WeeklyWeatherList_Model{
+fun WeeklyWeatherListEntity.toModel(): WeeklyWeather_Model{
     // TODO Вот так циклы сделать
   //  val listWeather: List<WeeklyWeather_Model> = weather.map { it.toModel() }
 /*    // TODO Изменить эту часть
@@ -23,13 +25,13 @@ fun WeeklyWeatherListEntity.toModel(): WeeklyWeatherList_Model{
         listWeather.add(item.toModel())
     }
     // TODO*/
-    return WeeklyWeatherList_Model(
-        main = main.toModel(),
-        weather = weather.map { it.toModel() },
+    return WeeklyWeather_Model(
+       // main = main.toModel(),
+        weather = list.map { it.toModel() },
         city = city.toModel()
     )
 }
-data class WeeklyMainEntity(
+/*data class WeeklyMainEntity(
     val temp: Double,
     val humidity: Long
 ) {
@@ -40,8 +42,8 @@ fun WeeklyMainEntity.toModel(): WeeklyMain_Model{
         temp = temp,
         humidity = humidity
     )
-}
-data class WeeklyWeatherEntity (
+}*/
+/*data class WeeklyWeatherEntity (
     val description: String,
     val icon: String
 ){
@@ -52,7 +54,7 @@ fun WeeklyWeatherEntity.toModel(): WeeklyWeather_Model{
         description = description,
         icon = icon
     )
-}
+}*/
 data class WeeklyCityEntity(
     val name: String,
 ) {

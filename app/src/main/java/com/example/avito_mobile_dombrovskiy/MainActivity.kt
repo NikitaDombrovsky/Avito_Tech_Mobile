@@ -1,6 +1,5 @@
 package com.example.avito_mobile_dombrovskiy
 
-import android.content.pm.ApplicationInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,9 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,21 +36,19 @@ import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivities.CurrentWeat
 import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivities.ErrorActivity
 import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivities.LoadingActivity
 import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivities.WeatherActivity_
-import org.koin.android.BuildConfig
+import com.example.avito_mobile_dombrovskiy.CurrentWeatherActivities.WeatherActivity_F
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.io.File
-import java.util.Properties
 
 class MainActivity : ComponentActivity() {
-    private val vm: WeatherViewModel_ by viewModel<WeatherViewModel_>()
+    private val vm: WeatherViewModel_F by viewModel<WeatherViewModel_F>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             AppTheme {
-                vm.reduce(WeatherEvent.Loading)
+                vm.reduce(WeatherEvent_.Loading)
                     //vm.fetchWeather("Omsk", "4dfc05c3309bcd397630c1c51dda583b")
-                WeatherActivity_()
+                WeatherActivity_F()
 
                 //val apiKey = BuildConfig.API_KEY
 /*                CompositionLocalProvider(LocalCounter provides counterState) {
@@ -66,18 +61,18 @@ class MainActivity : ComponentActivity() {
 }
 
 
-
+/*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WeatherActivty(
-    viewModel: WeatherViewModel_ = viewModel()
+    viewModel: WeatherViewModel_F = viewModel()
 ) {
     val weatherState by viewModel.state.collectAsState()
     var topBarCityName by remember { mutableStateOf("Пусто") } //TODO Ресурсы
     val navController = rememberNavController()
-    /*    val drawerState = rememberDrawerState(DrawerValue.Closed)
-        val scope = rememberCoroutineScope()*/
+    *//*    val drawerState = rememberDrawerState(DrawerValue.Closed)
+        val scope = rememberCoroutineScope()*//*
 
     Scaffold(
         topBar = {
@@ -87,7 +82,7 @@ fun WeatherActivty(
                     )
                         }, //TODO Ресурсы
                 navigationIcon = {
-                    IconButton(onClick = {/* scope.launch { drawerState.open() }*/ }) {
+                    IconButton(onClick = {*//* scope.launch { drawerState.open() }*//* }) {
                         Icon(Icons.Default.Search, contentDescription = "Меню") //TODO Ресурсы
                     }
                 }
@@ -149,7 +144,7 @@ fun WeatherActivty(
     //viewModel.fetchWeather("Omsk", "4dfc05c3309bcd397630c1c51dda583b")
 
 
-}
+}*/
 
 /*
 var topBarCityName = compositionLocalOf { mutableStateOf("Пусто") }

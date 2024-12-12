@@ -1,3 +1,4 @@
+
 package com.example.avito_mobile_dombrovskiy
 
 
@@ -12,7 +13,14 @@ data class WeatherResponse(
     val weather: List<Weather>,
     val name: String
 )
-{ companion object}
+{
+    companion object
+}
+
+/*fun WeatherResponse.toModel(): Weather_Model {
+    return
+}*/
+
 fun WeatherResponse.Companion.fromModel(weatherlistModel: WeatherList_Model): WeatherResponse {
     var t = weatherlistModel.weather
     //TODO А как лучше?
@@ -26,6 +34,7 @@ fun WeatherResponse.Companion.fromModel(weatherlistModel: WeatherList_Model): We
         weather = listWeather,
         name = weatherlistModel.name
     )
+
 }
 
 data class Main(

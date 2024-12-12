@@ -1,25 +1,30 @@
+
 package com.example.domain.models.WeeklyWeather
 
 
-data class WeeklyWeatherList_Model(
-    val main: WeeklyMain_Model,
-    val weather: List<WeeklyWeather_Model>,
+import com.example.domain.models.CurrentWeather.WeatherList_Model
+
+
+data class WeeklyWeather_Model(
+    //val main: WeeklyMain_Model,
+    val weather: List<WeatherList_Model>,
     val city: WeeklyCity_Model
 ) {
     companion object {}
 }
-data class WeeklyMain_Model(
+/*fun WeeklyWeatherList_Model.toModel(): WeeklyWe*/
+/*data class WeeklyMain_Model(
     val temp: Double,
     val humidity: Long
 ) {
     companion object {}
-}
-data class WeeklyWeather_Model (
+}*/
+/*data class WeeklyWeather_Model (
     val description: String,
     val icon: String
 ){
     companion object {}
-}
+}*/
 data class WeeklyCity_Model(
     val name: String,
 ) {
