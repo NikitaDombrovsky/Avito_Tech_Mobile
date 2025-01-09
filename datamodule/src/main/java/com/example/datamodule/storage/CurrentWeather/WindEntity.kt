@@ -1,6 +1,6 @@
 package com.example.datamodule.storage.CurrentWeather
 
-import com.example.domain.models.CurrentWeather.Wind_Model
+import com.example.domain.models.CurrentWeather.WindModel
 
 data class WindEntity(
     val speed: Double,
@@ -9,14 +9,14 @@ data class WindEntity(
     companion object {}
 }
 
-fun WindEntity.toModel(): Wind_Model {
-    return Wind_Model(
+fun WindEntity.toModel(): WindModel {
+    return WindModel(
         speed = speed,
         deg = deg,
     )
 }
 
-fun WindEntity.Companion.fromModel(wind: Wind_Model): WindEntity {
+fun WindEntity.Companion.fromModel(wind: WindModel): WindEntity {
     return WindEntity(
         wind.speed,
         wind.deg,

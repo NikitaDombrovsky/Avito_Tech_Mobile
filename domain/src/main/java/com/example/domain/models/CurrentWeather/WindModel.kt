@@ -1,6 +1,6 @@
 package com.example.domain.models.CurrentWeather
 
-data class Wind_Model(
+data class WindModel(
     val speed: Double,
     val deg: Long,
 )

@@ -1,6 +1,6 @@
 package com.example.datamodule.storage.CurrentWeather
 
-import com.example.domain.models.CurrentWeather.Weather_Model
+import com.example.domain.models.CurrentWeather.WeatherModel
 
 data class WeatherEntity(
     val id: Long,
@@ -8,13 +8,20 @@ data class WeatherEntity(
     val description: String,
     val icon: String,
 
-) {
+    ) {
     companion object {}
 }
 
+// TODO ?
+fun WeatherEntity.Companion.fromListModel(weatherEntityList: List<WeatherEntity>):
+        List<WeatherModel> {
+    return weatherEntityList.map { item ->
+        item.toModel()
+    }.toList()
+}
 
-fun WeatherEntity.toModel(): Weather_Model {
-    return Weather_Model(
+fun WeatherEntity.toModel(): WeatherModel {
+    return WeatherModel(
         id = id,
         main = main,
         description = description,
@@ -22,8 +29,7 @@ fun WeatherEntity.toModel(): Weather_Model {
     )
 }
 
-
-fun WeatherEntity.Companion.fromModel(weather: Weather_Model): WeatherEntity {
+fun WeatherEntity.Companion.fromModel(weather: WeatherModel): WeatherEntity {
     return WeatherEntity(
         id = weather.id,
         main = weather.main,

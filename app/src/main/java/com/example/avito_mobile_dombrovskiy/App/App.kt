@@ -1,12 +1,3 @@
-/*
-package com.example.avito_mobile_dombrovskiy.App
-
-import android.app.Application
-//import com.example.todolist.presentation.Main.MainActivity
-import dagger.hilt.android.HiltAndroidApp
-
-@HiltAndroidApp//(MainActivity::class)
-class App: Application()*/
 package com.example.avito_mobile_dombrovskiy.App
 
 
@@ -22,19 +13,15 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.logger.Level
 
 import org.koin.core.context.startKoin
-//import org.koin.core.context.GlobalContext.startKoin
 
-class App: Application() {
+
+class App : Application() {
     override fun onCreate() {
         super.onCreate()
-        startKoin{
-
-            androidLogger(Level.ERROR) //TODO в DEBUG не работает
+        startKoin {
+            androidLogger(Level.ERROR)
             androidContext(this@App)
-            modules(listOf(AppModule, DataModule ,DomainModule))
-            //modules(listOf(AppModule ,DomainModule))
-                //modules(listOf(AppModule))
+            modules(listOf(AppModule, DataModule, DomainModule))
         }
     }
-
 }

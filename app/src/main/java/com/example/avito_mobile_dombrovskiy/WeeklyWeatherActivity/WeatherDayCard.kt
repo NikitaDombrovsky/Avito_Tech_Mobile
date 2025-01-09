@@ -1,6 +1,6 @@
 package com.example.avito_mobile_dombrovskiy.WeeklyWeatherActivity
 
-import androidx.compose.foundation.Image
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -10,6 +10,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import coil.ImageLoader
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import com.example.avito_mobile_dombrovskiy.R
 
 
 @Composable
@@ -31,10 +40,26 @@ fun WeatherDayCard(weatherDay: WeatherDay) {
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(
-                painter = painterResource(id = weatherDay.weatherIcon),
-                contentDescription = null,
-                modifier = Modifier.size(48.dp)
+            val imageLoader = ImageLoader.Builder(LocalContext.current)
+                .crossfade(true)
+                .build()
+
+            AsyncImage(
+                //TODO Res
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data("https://openweathermap.org/img/wn/${weatherDay.iconName}@2x.png")
+                    .crossfade(true)
+                    .build(),
+                placeholder = painterResource(id = R.drawable.weather_cloudy),
+                contentDescription = stringResource(R.string.locale),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .size(48.dp),
+                imageLoader = imageLoader,
+                onError = { error ->
+                    Log.e("AsyncImage", "Failed to load image: ${error.result.throwable.message}")
+                }
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column {
@@ -48,9 +73,9 @@ fun WeatherDayCard(weatherDay: WeatherDay) {
 
 data class WeatherDay(
     val dayOfWeek: String,
-    val weatherIcon: Int, // TODO Идентификатор ресурса иконки
     val temperature: String,
-    val description: String
+    val description: String,
+    val iconName: String
 )
 
 @Composable
@@ -65,5 +90,4 @@ fun WeeklyWeatherList(weatherDays: List<WeatherDay>) {
             }
         }
     }
-
 }

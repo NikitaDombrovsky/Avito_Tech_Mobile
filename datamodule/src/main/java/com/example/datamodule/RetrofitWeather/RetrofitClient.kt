@@ -14,7 +14,6 @@ object RetrofitClient {
             .create(WeatherService::class.java)
     }
 
-    // TODO Точно так?
     private const val WEEKLY_BASE_URL = "https://api.openweathermap.org/data/2.5/"
 
     val weeklyWeatherService: WeatherService by lazy {

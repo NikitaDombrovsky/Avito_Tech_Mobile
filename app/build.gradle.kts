@@ -4,14 +4,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    //id("org.jetbrains.kotlin.jvm") version "1.9.0"
-    //id("com.google.devtools.ksp") version "1.9.0-1.0.12"
     id("com.google.devtools.ksp") version "2.0.21-1.0.27"
-
-    //id("com.google.devtools.ksp")
-/*    id("kotlin-kapt")*/
-    //TODO
-   // id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -26,11 +19,6 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        //
-        /*val properties = Properties()
-        properties.load(project.rootProject.file("apikeys.properties").inputStream())
-        buildConfigField("String", "WEATHER_API_KEY", properties.getProperty("API_KEY"))
-*/
     }
 
     buildTypes {
@@ -81,7 +69,6 @@ dependencies {
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
 
-
     // GSON
 
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
@@ -93,14 +80,13 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
 
 
-     implementation("com.google.dagger:hilt-android:2.51.1")
+    implementation("com.google.dagger:hilt-android:2.51.1")
 
     implementation("androidx.room:room-ktx:2.5.0")
-    //ksp("androidx.room:room-compiler:2.5.0")
     // Koin for Kotlin apps
     val koin_version = "3.1.2"
-    implementation("io.insert-koin:koin-core:$koin_version") //+
-    implementation("io.insert-koin:koin-android:$koin_version") //+
+    implementation("io.insert-koin:koin-core:$koin_version")
+    implementation("io.insert-koin:koin-android:$koin_version")
     //Koin Jetpack
     implementation("io.insert-koin:koin-androidx-compose:$koin_version")
     val nav_version = "2.8.4"
@@ -115,21 +101,11 @@ dependencies {
     // Feature module support for Fragments
     implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
 
-
-
     ksp("com.google.dagger:dagger-compiler:2.48") // Dagger compiler
     ksp("com.google.dagger:hilt-compiler:2.48")   // Hilt compiler
+    
+    implementation("io.coil-kt:coil-compose:2.4.0") // или более новая версия
 
-    //kapt("com.google.dagger:hilt-android-compiler:2.44")
-/*    dependencies {
-        implementation "com.google.dagger:hilt-android:2.51.1"
-        kapt "com.google.dagger:hilt-compiler:2.51.1"
-    }*/
-/*
-// Allow references to generated code
-    kapt {
-        correctErrorTypes true
-    }*/
 }
 
 

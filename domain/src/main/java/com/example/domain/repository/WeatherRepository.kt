@@ -1,21 +1,10 @@
 package com.example.domain.repository
 
-import com.example.domain.models.CurrentWeather.WeatherList_Model
-import com.example.domain.models.WeeklyWeather.WeeklyWeather_Model
+import com.example.domain.models.CurrentWeather.WeatherListModel
+import com.example.domain.models.WeeklyWeather.WeeklyWeatherModel
 
 interface WeatherRepository {
-
-
-    suspend fun getCurrentWeather(city: String): WeatherList_Model
-    suspend fun getWeeklyWeather(city: String): WeeklyWeather_Model
-  //  suspend fun getWeeklyWeather(city: String): List<WeeklyWeatherList_Model>
+    suspend fun getCurrentWeather(city: String, language: String): WeatherListModel
+    suspend fun getWeeklyWeather(city: String, language: String): WeeklyWeatherModel
 }
 
-/*
-import com.example.todolist.domain.models.TaskModel
-
-interface TaskRepository {
-    fun getAllTasks(): List<TaskModel>
-    fun getTaskDetails(): TaskModel
-    fun saveTask(taskModel: TaskModel): Boolean
-}*/

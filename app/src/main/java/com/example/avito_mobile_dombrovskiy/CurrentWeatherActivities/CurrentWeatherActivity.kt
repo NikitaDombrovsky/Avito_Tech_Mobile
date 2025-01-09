@@ -34,7 +34,7 @@ fun CurrentWeatherActivity(weatherResponse: WeatherResponse) {
             )
         )
         Text(
-           text = stringResource(
+            text = stringResource(
                 R.string.description_text, weatherResponse.weather[0].description
             )
         )

@@ -1,6 +1,6 @@
 package com.example.datamodule.storage.CurrentWeather
 
-import com.example.domain.models.CurrentWeather.Main_Model
+import com.example.domain.models.CurrentWeather.MainModel
 
 
 data class MainEntity(
@@ -17,8 +17,8 @@ data class MainEntity(
     companion object {}
 }
 
-fun MainEntity.toModel(): Main_Model {
-    return Main_Model(
+fun MainEntity.toModel(): MainModel {
+    return MainModel(
         temp = temp,
         feels_like = feels_like,
         temp_min = temp_min,
@@ -30,7 +30,7 @@ fun MainEntity.toModel(): Main_Model {
     )
 }
 
-fun MainEntity.Companion.fromModel(main: Main_Model): MainEntity {
+fun MainEntity.Companion.fromModel(main: MainModel): MainEntity {
     return MainEntity(
         main.temp,
         main.feels_like,

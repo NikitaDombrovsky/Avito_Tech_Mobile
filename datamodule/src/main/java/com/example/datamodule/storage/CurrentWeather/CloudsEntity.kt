@@ -1,6 +1,6 @@
 package com.example.datamodule.storage.CurrentWeather
 
-import com.example.domain.models.CurrentWeather.Clouds_Model
+import com.example.domain.models.CurrentWeather.CloudsModel
 
 
 data class CloudsEntity(
@@ -9,12 +9,12 @@ data class CloudsEntity(
     companion object {}
 }
 
-fun CloudsEntity.toModel(): Clouds_Model {
-    return Clouds_Model(
+fun CloudsEntity.toModel(): CloudsModel {
+    return CloudsModel(
         all = all
     )
 }
 
-fun CloudsEntity.Companion.fromModel(cloudsModel: Clouds_Model): CloudsEntity {
+fun CloudsEntity.Companion.fromModel(cloudsModel: CloudsModel): CloudsEntity {
     return CloudsEntity(cloudsModel.all)
 }

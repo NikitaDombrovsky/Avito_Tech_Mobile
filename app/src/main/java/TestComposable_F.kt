@@ -1,27 +1,31 @@
 package com.example.avito_mobile_dombrovskiy.CurrentWeatherActivities
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-
+import androidx.compose.ui.text.input.ImeAction
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -31,17 +35,17 @@ import com.example.avito_mobile_dombrovskiy.R
 import com.example.avito_mobile_dombrovskiy.WeatherResponse
 import com.example.avito_mobile_dombrovskiy.WeatherUIState_
 import com.example.avito_mobile_dombrovskiy.WeatherViewModel_F
-
 import com.example.avito_mobile_dombrovskiy.WeeklyWeatherActivity.WeatherDay
 import com.example.avito_mobile_dombrovskiy.WeeklyWeatherActivity.WeeklyWeatherList
 import com.example.avito_mobile_dombrovskiy.WeeklyWeatherTest.WeeklyWeatherList_Pr
-import kotlin.time.Duration.Companion.days
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.TextStyle
+import java.util.Locale
 
 
-var topBarCityName_ by mutableStateOf("Пусто")
+var topBarCityName_ by mutableStateOf("London")
 
-//var topBarCityName by remember { mutableStateOf("Пусто") } //TODO Ресурсы
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WeatherActivity_F(
     viewModel: WeatherViewModel_F = viewModel()
@@ -49,28 +53,65 @@ fun WeatherActivity_F(
     val weatherState by viewModel.state.collectAsState()
     val navController = rememberNavController()
 
+
     Scaffold(
         topBar = {
-            WeatherTopAppBar_F(topBarCityName_)
+            WeatherTopAppBar_WithDynamicTextField_F()
         }
     ) { innerPadding ->
         WeatherContent_F(weatherState, navController, innerPadding)
     }
-
-    viewModel.fetchWeather("Omsk", "ru")//"4dfc05c3309bcd397630c1c51dda583b")
+    setDefaultValue(viewModel)
 }
 
+fun setDefaultValue(
+    viewModel: WeatherViewModel_F
+) {
+    viewModel.setCity(topBarCityName_)
+    viewModel.setLanguage("ru")
+    viewModel.fetchWeather_F()
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WeatherTopAppBar_F(cityName: String) {
+fun WeatherTopAppBar_WithDynamicTextField_F(
+) {
+
+    var isTextFieldVisible by remember { mutableStateOf(false) }
+    //TODO Вынести стейт наверх
+    var cityName by remember { mutableStateOf("") }
     TopAppBar(
         title = {
-            Text(stringResource(R.string.weather_title, cityName))
+            if (isTextFieldVisible) {
+                TextField(
+
+                    value = cityName,
+                    onValueChange = { cityName = it },
+                    label = { Text(stringResource(R.string.weather_title, topBarCityName_)) },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            isTextFieldVisible = false;
+                            topBarCityName_ = cityName
+                        }
+                    )
+                )
+            } else {
+                Text(stringResource(R.string.weather_title, topBarCityName_))
+            }
         },
         navigationIcon = {
-            IconButton(onClick = { /* scope.launch { drawerState.open() } */ }) {
-                Icon(Icons.Default.Search, contentDescription = "Меню") //TODO Ресурсы
+            IconButton(
+                onClick = {
+                    isTextFieldVisible = !isTextFieldVisible
+                }
+            ) {
+                Icon(
+                    imageVector = if (isTextFieldVisible) Icons.Default.Close else Icons.Default.Search,
+                    contentDescription = if (isTextFieldVisible) "Закрыть" else "Поиск"
+                )
             }
         }
     )
@@ -89,7 +130,9 @@ fun WeatherContent_F(
 
         is WeatherUIState_.Success -> {
             val weatherResponse = (weatherState as WeatherUIState_.Success).weatherResponse
-            topBarCityName_ = weatherResponse.name
+
+            // TODO need fix
+            // topBarCityName_ = weatherResponse.name
             val weeklyWeather = (weatherState as WeatherUIState_.Success).weeklyWeatherResponse
 
             Column(modifier = Modifier.fillMaxSize()) {
@@ -99,14 +142,13 @@ fun WeatherContent_F(
                     weeklyWeather
                 )
             }
+
         }
 
         is WeatherUIState_.Error -> {
             val errorMessage = (weatherState as WeatherUIState_.Error).message
             ErrorActivity(errorMessage)
         }
-
-
     }
 }
 
@@ -119,6 +161,7 @@ fun WeatherDraggableBox_(
     Box(
         modifier = Modifier
             .draggable(
+                // TODO need fix
                 state = rememberDraggableState { delta ->
                     if (delta > 0) {
                         navController.navigate("home")
@@ -150,48 +193,21 @@ fun WeatherNavHost_(
         }
         composable("settings") {
             WeeklyWeatherList(weatherDays = generateWeatherDays_F(weeklyWeather))
-            //WeatherListTest_(weeklyWeatherList)
 
         }
     }
 }
-@Composable // TODO Это как бы не компосабл
+
+@Composable
 fun generateWeatherDays_F(
     weeklyWeatherList: WeeklyWeatherList_Pr
 ): List<WeatherDay> {
-    return (0 until weeklyWeatherList.list.size).map { index ->
+    return weeklyWeatherList.list.map { weatherData ->
         WeatherDay(
-            dayOfWeek = "День" + index  ,
-            weatherIcon = R.drawable.weather_cloudy,
-            //temperature = "C" + weeklyWeatherList.list[index].main.temp ,
-            temperature = stringResource(
-                R.string.weeklyTemperature_text, weeklyWeatherList.list[index].main.temp
-            ) ,
-            description = weeklyWeatherList.list[index].weather[0].description
+            dayOfWeek = weatherData.dt_txt,
+            temperature = stringResource(R.string.weeklyTemperature_text, weatherData.main.temp),
+            description = weatherData.weather[0].description,
+            iconName = weatherData.weather[0].icon
         )
     }
 }
-@Composable
-fun WeatherListTest_(
-    weeklyWeatherList: WeeklyWeatherList_Pr
-) {
-    WeeklyWeatherList(weatherDays = generateWeatherDays_(20))
-}
-
-fun generateWeatherDays_(count: Int): List<WeatherDay> {
-    return (0 until count).map { index ->
-        WeatherDay(
-            dayOfWeek = "День" + index,
-            weatherIcon = R.drawable.weather_cloudy,
-            temperature = "25°C",
-            description = "Солнечно"
-        )
-    }
-}
-
-/*
-@Preview
-@Composable
-fun PreviewWeatherListTest_() {
-    WeatherListTest_()
-}*/

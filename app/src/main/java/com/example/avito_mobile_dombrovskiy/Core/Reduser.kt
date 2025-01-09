@@ -3,8 +3,8 @@ package com.example.avito_mobile_dombrovskiy.Core
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-
-abstract class Reducer<S : UiState, E : UiEvent>(initialVal: S) {
+//TODO: I forgot
+/*abstract class Reducer<S : UiState, E : UiEvent>(initialVal: S) {
 
     private val mutableState: MutableStateFlow<S> = MutableStateFlow(initialVal)
     val state = mutableState.asStateFlow()
@@ -19,7 +19,7 @@ abstract class Reducer<S : UiState, E : UiEvent>(initialVal: S) {
 
     abstract fun reduce(oldState: S, event: E)
 
-}
+}*/
 
 interface UiEvent
 

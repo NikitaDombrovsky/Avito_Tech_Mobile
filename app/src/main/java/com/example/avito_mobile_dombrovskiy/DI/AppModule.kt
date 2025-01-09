@@ -7,12 +7,10 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val AppModule = module {
-    viewModel<WeatherViewModel_F>(){
+    viewModel<WeatherViewModel_F>() {
         WeatherViewModel_F(
-            getCurrentWeatherUseCase =  get(),
+            getCurrentWeatherUseCase = get(),
             getWeeklyWeatherUseCase = get()
-            //getTasksUseCase = get()
-
         )
     }
 }

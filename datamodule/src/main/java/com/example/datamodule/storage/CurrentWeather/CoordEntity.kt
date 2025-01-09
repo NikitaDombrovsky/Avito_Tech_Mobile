@@ -4,7 +4,8 @@ import com.example.domain.models.CurrentWeather.Coord_Model
 
 
 data class CoordEntity(
-    val lon: Double, val lat: Float
+    val lon: Double,
+    val lat: Float
 ) {
     companion object {}
 }

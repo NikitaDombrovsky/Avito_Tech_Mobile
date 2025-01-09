@@ -1,8 +1,6 @@
 package com.example.avito_mobile_dombrovskiy
 
 
-
-
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,6 +24,18 @@ class WeatherViewModel_F(
     private val _state = MutableStateFlow<WeatherUIState_>(WeatherUIState_.Loading)
     val state: StateFlow<WeatherUIState_> = _state.asStateFlow()
 
+    private val _currentCity = MutableStateFlow("")
+    val currentCity: StateFlow<String> get() = _currentCity.asStateFlow()
+    private val _currentLanguage = MutableStateFlow("")
+    val currentLanguage: StateFlow<String> get() = _currentLanguage.asStateFlow()
+    fun setCity(city: String) {
+        _currentCity.value = city
+    }
+
+    fun setLanguage(city: String) {
+        _currentLanguage.value = city
+    }
+
     fun reduce(event: WeatherEvent_) {
         when (event) {
 
@@ -40,42 +50,27 @@ class WeatherViewModel_F(
 
 
             }
-
         }
     }
 
-/*    // TODO suspend
-    suspend fun fetchWeeklyWeather(city: String, apiKey: String) {
-
-        getWeeklyWeatherUseCase(city).map {data -> WeeklyWeatherList_Pr.fromModel(data)}
+    fun fetchWeather_F() {
         viewModelScope.launch {
             try {
-                _state.tryEmit(
-                    WeatherUIState_.Success(
-                        getWeeklyWeatherUseCase(city).map {data -> WeeklyWeatherList_Pr.fromModel(data)}
-                    )
-                )
-            } catch (e: Exception) {
-                _state.value = WeatherUIState.Error(e.localizedMessage ?: "Unknown error")
-            }
-        }
-    }*/
-
-    // TODO suspend
-    fun fetchWeather(city: String, language: String){//}, apiKey: String) {
-        viewModelScope.launch {
-            try {
-                val t1 = WeatherResponse.fromModel(getCurrentWeatherUseCase(city))
-                //val t2 = getWeeklyWeatherUseCase(city).map {data -> WeeklyWeatherList_Pr.fromModel(data)}
-                val t2 = WeeklyWeatherList_Pr.fromModel(getWeeklyWeatherUseCase(city))
-                //val t2 = getWeeklyWeatherUseCase(city).map {data -> WeeklyWeatherList_Pr.fromModel(data)}
-                Log.e("ИЗДЕЦ", "t1:" + t1 + "t2:" + t2)
                 _state.value =
                     WeatherUIState_.Success(
-                        WeatherResponse.fromModel(getCurrentWeatherUseCase(city)),
-                       // getWeeklyWeatherUseCase(city).map {data -> WeeklyWeatherList_Pr.fromModel(data)}
-                        WeeklyWeatherList_Pr.fromModel(getWeeklyWeatherUseCase(city))
-                        //getWeeklyWeatherUseCase(city).map {data -> WeeklyWeatherList_Pr.fromModel(data)}
+                        WeatherResponse.fromModel(
+                            getCurrentWeatherUseCase(
+                                currentCity.value,
+                                currentLanguage.value
+                            )
+                        ),
+
+                        WeeklyWeatherList_Pr.fromModel(
+                            getWeeklyWeatherUseCase(
+                                currentCity.value,
+                                currentLanguage.value
+                            )
+                        )
                     )
                 Log.e("!", "!")
             } catch (e: Exception) {
@@ -85,20 +80,22 @@ class WeatherViewModel_F(
     }
 
     init {
-        Log.e("!", "VM created")
+        Log.e("!VM", "VM created")
     }
 
     override fun onCleared() {
-        Log.e("!", "VM cleared")
+        Log.e("!VM", "VM cleared")
         super.onCleared()
     }
 }
 
 sealed class WeatherUIState_ : UiState {
     object Loading : WeatherUIState_()
-    //data class Success(val weatherResponse: WeatherResponse, val weatherList: List<WeeklyWeatherList_Pr>) : WeatherUIState_()
-    data class Success(val weatherResponse: WeatherResponse, val weeklyWeatherResponse: WeeklyWeatherList_Pr) : WeatherUIState_()
-   // data class Success(val weatherResponse: WeatherResponse) : WeatherUIState_()
+    data class Success(
+        val weatherResponse: WeatherResponse,
+        val weeklyWeatherResponse: WeeklyWeatherList_Pr
+    ) : WeatherUIState_()
+
     data class Error(val message: String) : WeatherUIState_()
 }
 
@@ -107,7 +104,4 @@ sealed interface WeatherEvent_ : UiEvent {
     object Loading : WeatherEvent_
     data class Success(val weatherResponse: WeatherEntity) : WeatherEvent_
     data class Error(val message: String) : WeatherEvent_
-
-
-
 }

@@ -1,5 +1,5 @@
 package com.example.domain.models.CurrentWeather
 
-data class Clouds_Model(
+data class CloudsModel(
     val all: Long,
 )
